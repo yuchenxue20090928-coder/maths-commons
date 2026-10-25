@@ -560,7 +560,7 @@ footer .fine{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,238,
   <div class="wrap">
     <div class="eyebrow rv" data-i18n="qw.eb">Question of the week</div>
     <h2 class="display rv" data-i18n-html="qw.h">Two questions a week. <span class="thin">One easy to get wrong.</span></h2>
-    <p class="subline rv" data-i18n="qw.sub">Every Monday: one past-paper question most people lose marks on, and one competition problem from AMC, AIME or BMO. Work them before you open the answer.</p>
+    <p class="subline rv" data-i18n="qw.sub">Every Monday: one past-paper question most people lose marks on, and one competition problem from AMC, AIME, BMO or ARML. Work them before you open the answer.</p>
     <div class="qgrid" id="qgrid"></div>
   </div>
 </section>
@@ -774,8 +774,8 @@ const I18N = {
     "finder.o0":"This week's two questions","finder.o1":"Lecture recordings",
     "finder.o2":"Handouts &amp; notes","finder.o3":"Problem index","finder.o4":"What students achieved",
     "finder.o5":"Ask a question",
-    "wb.tag":"This week · {w}","wb.q1":"9709 · the integration everybody loses a mark on",
-    "wb.q2":"AMC 12 · a condition nobody uses",
+    "wb.tag":"This week · {w}","wb.q1":"9709 · the coefficient that comes from two places",
+    "wb.q2":"ARML · six people, no three in order",
     "stat.1":"lectures recorded","stat.2":"handouts written",
     "stat.3":"questions answered","stat.4":"study sessions",
     "qw.eb":"Question of the week","qw.h":'Two questions a week. <span class="thin">One easy to get wrong.</span>',
@@ -840,12 +840,12 @@ const I18N = {
     "finder.o0":"本周的两道题","finder.o1":"视频讲解",
     "finder.o2":"讲义与板书","finder.o3":"题库","finder.o4":"学生的成果",
     "finder.o5":"提问",
-    "wb.tag":"本周 · {w}","wb.q1":"9709 · 那道人人都会丢一分的积分",
-    "wb.q2":"AMC 12 · 有一个条件谁都没用上",
+    "wb.tag":"本周 · {w}","wb.q1":"9709 · 系数来自两个地方",
+    "wb.q2":"ARML · 六个人，不许三人递增",
     "stat.1":"节课已录像","stat.2":"份讲义",
     "stat.3":"道题有答案","stat.4":"人次来听",
     "qw.eb":"每周两题","qw.h":'每周两道，<span class="thin">一道最容易错。</span>',
-    "qw.sub":"每周一放两道：一道大多数人都会丢分的真题，加一道 AMC、AIME 或 BMO 的竞赛题，先自己做，做完了再展开答案。",
+    "qw.sub":"每周一放两道：一道大多数人都会丢分的真题，加一道 AMC、AIME、BMO 或 ARML 的竞赛题，先自己做，做完了再展开答案。",
     "tr.eb":"目录","tr.h":'四套考纲，<span class="thin">一个共同体</span>',
     "tr.sub":"所有内容都按你今年真正要考的卷子归档，不看它看起来有多难。",
     "track.adm":"入学考试","track.comp":"竞赛与奥赛",
@@ -958,24 +958,25 @@ const HANDOUTS = [
 ];
 
 const QOTW = [
-  {tag:{en:"9709 · past paper", zh:"9709 · 真题"},
-   en:"The integration that looks routine",
-   zh:"那道看起来最常规的积分",
-   bEn:"A definite integral where the substitution has to be reversed halfway. Most scripts lose the constant, then the final mark. Try it before you look.",
-   bZh:"一道定积分，换元到一半必须倒回来。大多数卷子丢在常数上，然后丢掉最后一分。先自己做，再看答案。",
-   mEn:"9709/33 · Autumn 2024 · Q7 · 8 marks",
-   mZh:"9709/33 · 2024 秋 · 第 7 题 · 8 分",
-   aEn:"<b>Where it goes wrong:</b> the substitution is applied to the limits but not to the differential, so the integral is evaluated over the wrong interval. Reverse the substitution before you change limits — always.",
-   aZh:"<b>错在哪：</b>换元只换了上下限，没换微分，于是积分在错误的区间上求值。改上下限之前，先把换元倒回来——永远如此。"},
-  {tag:{en:"AMC / AIME · competition", zh:"AMC / AIME · 竞赛"},
-   en:"Counting with a condition nobody uses",
-   zh:"有一个条件谁都没用上",
-   bEn:"A counting problem where the obvious case split takes twenty minutes and the intended solution takes two. The extra condition in the last sentence is the whole problem.",
-   bZh:"一道计数题，硬分类要二十分钟，出题人想要的解法只要两分钟。最后一句里那个多出来的条件，就是整道题。",
-   mEn:"AMC 12 · 2023 · Q21",
-   mZh:"AMC 12 · 2023 · 第 21 题",
-   aEn:"<b>The move:</b> the condition forces a bijection onto a much smaller set. Count the smaller set, not the original one.",
-   aZh:"<b>关键一步：</b>那个条件把问题双射到一个更小的集合上。数小的那个，别数原来的。"}
+  {tag:{en:"9709 · Paper 1 · binomial", zh:"9709 · Paper 1 · 二项展开"},
+   en:"The coefficient that comes from two places at once",
+   zh:"系数来自两个地方，不是一个",
+   bEn:"Find the coefficient of x³ in the expansion of (1 + 3x)(1 − 2x)⁷. Most people find one contribution and stop.",
+   bZh:"求 (1 + 3x)(1 − 2x)⁷ 展开式中 x³ 的系数。大多数人找到一份贡献就停手了。",
+   mEn:"9709/12 style · 4 marks",
+   mZh:"9709/12 类型 · 4 分",
+   aEn:"<b>Two sources, not one.</b> x³ is built two ways: the 1 from the first bracket times the x³ term of (1−2x)⁷, and the 3x times its x² term.<br>In (1−2x)⁷ the x³ coefficient is C(7,3)(−2)³ = 35 × (−8) = <b>−280</b>, and the x² coefficient is C(7,2)(−2)² = 21 × 4 = <b>84</b>.<br>So the answer is −280 + 3 × 84 = −280 + 252 = <b>−28</b>.<br><b>Where the marks go:</b> writing only −280 and forgetting the second contribution, or losing the minus sign because (−2)³ is negative. A negative coefficient is perfectly normal — do not correct it.",
+   aZh:"<b>两个来源，不是一个。</b> x³ 由两条路拼成：第一个括号的 1 乘 (1−2x)⁷ 的 x³ 项，以及 3x 乘它的 x² 项。<br>(1−2x)⁷ 里，x³ 的系数 = C(7,3)(−2)³ = 35 × (−8) = <b>−280</b>，x² 的系数 = C(7,2)(−2)² = 21 × 4 = <b>84</b>。<br>所以答案是 −280 + 3 × 84 = −280 + 252 = <b>−28</b>。<br><b>分丢在哪：</b>只写 −280，漏掉第二份；或者把 (−2)³ 的负号弄丢。系数是负数很正常，别去修正它。"},
+
+  {tag:{en:"ARML 2015 · Individual", zh:"ARML 2015 · 个人赛"},
+   en:"Six people, one line, no three in order",
+   zh:"六个人排一列，不许有三人递增",
+   bEn:"Six people of different heights queue for donuts. How many arrangements have no three consecutive people standing in increasing order of height, front to back? 720 is wrong, and 480 is the answer that looks right.",
+   bZh:"六个身高各不相同的人排队买甜甜圈。有多少种排法，使得没有任何三个相邻的人从前往后身高递增？720 是错的，480 是看起来很像对的那个。",
+   mEn:"2015 ARML · Individual Round · Problem 10 · answer 349",
+   mZh:"2015 ARML · 个人赛 · 第 10 题 · 答案 349",
+   aEn:"<b>Count the bad orders instead.</b> There are 6! = 720 in total. Let A, B, C, D be the events that positions (1,2,3), (2,3,4), (3,4,5), (4,5,6) are in increasing height.<br><b>Singles:</b> |A| = 6!/3! = 120 — pick the three people, their order is forced. Same for B, C, D. Subtract 4 × 120 = 480.<br><b>Pairs:</b> the three touching pairs (AB, BC, CD) give 6!/4! = 30 each, so 90. The two pairs with a one-seat gap (AC, BD) give 6!/5! = 6 each, so 12. A and D do not touch at all, so |A∩D| = 6!/(3!·3!) = <b>20</b> — you order each block separately. Add 90 + 12 + 20 = 122.<br><b>Triples:</b> |A∩B∩C| = 6, |B∩C∩D| = 6, |A∩B∩D| = 1, |A∩C∩D| = 1. Subtract 14.<br><b>All four:</b> only the fully sorted line works, so 1. Add it back.<br>720 − 480 + 122 − 14 + 1 = <b>349</b>.<br><b>The whole problem is |A∩D| = 20.</b> A and D are disjoint blocks, so requiring both still leaves the three people inside each block free to stand in any order. Write 6 there instead of 20 and you get 335 — which is why 335 is the most common wrong answer.",
+   aZh:"<b>先数不合要求的排法。</b> 总共 6! = 720 种。设 A、B、C、D 分别是第 (1,2,3)、(2,3,4)、(3,4,5)、(4,5,6) 位身高递增的事件。<br><b>单个：</b> |A| = 6!/3! = 120——挑出这三个人，顺序就定了。B、C、D 同理。减去 4 × 120 = 480。<br><b>两两：</b> 三对相邻的（AB、BC、CD）各 6!/4! = 30，共 90；两对隔一个位置的（AC、BD）各 6!/5! = 6，共 12；而 A 和 D 完全不重叠，|A∩D| = 6!/(3!·3!) = <b>20</b>——两块各自排序，互不相干。加回 90 + 12 + 20 = 122。<br><b>三个：</b> |A∩B∩C| = 6，|B∩C∩D| = 6，|A∩B∩D| = 1，|A∩C∩D| = 1。减去 14。<br><b>四个：</b> 只有全队递增这一种，加回 1。<br>720 − 480 + 122 − 14 + 1 = <b>349</b>。<br><b>整道题的胜负手是 |A∩D| = 20。</b> A 和 D 是两段不相交的区间，同时要求它们递增，等于两块内部各自随便排。这里写成 6 就会得到 335——所以 335 是最常见的错答。"}
 ];
 
 const PROBLEMS = [
@@ -1053,7 +1054,7 @@ document.addEventListener('click', e => {
    页面上的数字 = BASE + 数组长度，所以你往下面 VIDEOS / HANDOUTS / PROBLEMS
    里加一条，首页的数字自己就变了，不用回来改。
    如果 BASE 写得比实际多，改掉——招生官会去 B 站点开核对。 */
-const BASE = { lectures: 58, handouts: 48, problems: 313, sessions: 1240 };
+const BASE = { lectures: 58, handouts: 48, problems: 260, sessions: 77 };
 
 const STATS = {
   lectures: () => BASE.lectures + VIDEOS.length,
