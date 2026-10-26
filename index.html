@@ -1054,7 +1054,7 @@ document.addEventListener('click', e => {
    页面上的数字 = BASE + 数组长度，所以你往下面 VIDEOS / HANDOUTS / PROBLEMS
    里加一条，首页的数字自己就变了，不用回来改。
    如果 BASE 写得比实际多，改掉——招生官会去 B 站点开核对。 */
-const BASE = { lectures: 58, handouts: 48, problems: 260, sessions: 77 };
+const BASE = { lectures: 0, handouts: 0, problems: 0, sessions: 0 };
 
 const STATS = {
   lectures: () => BASE.lectures + VIDEOS.length,
