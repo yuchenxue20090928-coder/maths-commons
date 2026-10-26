@@ -1310,6 +1310,26 @@ const cio = new IntersectionObserver(es => {
   if (v.readyState >= 2) kick(); else v.addEventListener('loadeddata', kick, {once:true});
 })();
 
+/* ================= 省电：背景视频只在看得见的时候播 ================= */
+/* 页面切到后台、或者 hero 滚出视野，就把视频暂停。开着标签页晾一整天，
+   循环解码 720p 视频是实打实的耗电，暂停之后几乎归零。 */
+(function videoPower(){
+  const v = $('#heroVideo'); if (!v) return;
+  let inView = true;
+  const sync = () => {
+    if (document.hidden || !inView){
+      if (!v.paused) v.pause();
+    } else if (v.readyState >= 2){
+      const p = v.play(); if (p && p.catch) p.catch(() => {});
+    }
+  };
+  document.addEventListener('visibilitychange', sync);
+  if ('IntersectionObserver' in window){
+    new IntersectionObserver(es => { inView = es[0].isIntersecting; sync(); },
+      {threshold: 0.01}).observe(v);
+  }
+})();
+
 /* ================= scroll: progress + parallax ================= */
 (function scrollFx(){
   const prog = $('#prog'), bar = $('#topbar'), vid = $('#heroVideo');
