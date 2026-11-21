@@ -310,6 +310,7 @@ details.ans .inner b{color:var(--gold)}
 .handout:hover .lock span{opacity:1;transform:none}
 .hpage img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;
   pointer-events:none;-webkit-user-drag:none;user-select:none}
+.hpage img.fit-c{object-fit:contain;object-position:center;background:#0E162A}
 .hbody{padding:13px 15px 15px}
 .hbody .t{font-size:13px;font-weight:600;line-height:1.5;margin:0 0 4px}
 .hbody .m{font-size:11px;color:var(--muted);display:flex;justify-content:space-between}
@@ -447,12 +448,8 @@ footer .fine{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,238,
 /* ================= handouts: category filter ================= */
 .handout.hide{display:none}
 
-/* ================= ask / submit ================= */
+/* ================= board (forum) ================= */
 #ask{background:var(--cream-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.askgrid{display:grid;grid-template-columns:1.12fr .88fr;gap:48px;align-items:start}
-@media(max-width:900px){.askgrid{grid-template-columns:1fr;gap:32px}}
-.askform{background:#fff;border:1px solid var(--line);border-radius:3px;padding:26px 26px 22px;
-  box-shadow:0 30px 60px -50px rgba(32,3,68,.55)}
 .field{margin-bottom:16px}
 .field label{display:block;font-size:10.4px;letter-spacing:.2em;text-transform:uppercase;
   color:var(--muted);margin-bottom:7px}
@@ -477,12 +474,87 @@ footer .fine{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,238,
 .askmsg{margin-top:14px;font-size:12px;color:var(--gold-3);min-height:17px;line-height:1.6}
 .askmsg.err{color:#b3261e}
 
-.asknote{font-size:13.4px;color:var(--text-2);line-height:1.95}
-.asknote h3{font-family:var(--serif);font-weight:500;font-size:20px;margin:0 0 14px;color:var(--text)}
-.asknote ol{margin:0 0 18px;padding-left:17px}
-.asknote li{margin-bottom:10px}
-.asknote li::marker{color:var(--gold-3)}
-.asknote p:last-child{font-size:12.4px;color:var(--muted)}
+/* mode banner */
+.fo-note{display:flex;gap:12px;align-items:flex-start;margin:0 0 6px;padding:13px 16px;
+  background:#fff8e6;border:1px solid #e8d49a;border-radius:2px;font-size:12.4px;
+  line-height:1.72;color:#6b5320}
+.fo-note b{color:#4a3712}
+.fo-note[hidden]{display:none}
+
+/* the stream */
+.fo-stream{position:relative;margin:30px 0 0;overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+.fo-row{overflow:hidden;padding:9px 0}
+.fo-track{display:flex;gap:14px;width:max-content;
+  animation:foL 78s linear infinite;will-change:transform}
+.fo-row[data-dir="r"] .fo-track{animation-name:foR;animation-duration:92s}
+.fo-stream:hover .fo-track{animation-play-state:paused}
+@keyframes foL{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+@keyframes foR{from{transform:translate3d(-50%,0,0)}to{transform:translate3d(0,0,0)}}
+@media(prefers-reduced-motion:reduce){.fo-track{animation:none!important}}
+
+.fo-card{flex:0 0 auto;width:272px;background:#fff;border:1px solid var(--line);border-radius:2px;
+  padding:15px 17px 13px;cursor:pointer;transition:.38s var(--ease);text-align:left;
+  font:inherit;color:inherit;display:block}
+.fo-card:hover{transform:translateY(-3px);border-color:var(--gold-3);
+  box-shadow:0 20px 40px -26px rgba(32,3,68,.5)}
+.fo-card:focus-visible{outline:2px solid var(--gold-3);outline-offset:3px}
+.fo-card .q{font-size:13.2px;line-height:1.66;color:var(--text);
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.fo-card .f{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  margin-top:12px;font-size:9.8px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.fo-card .f .tag{color:var(--gold-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fo-card .f .rep{white-space:nowrap;font-variant-numeric:tabular-nums}
+.fo-card .f .rep.zero{opacity:.55}
+.fo-card.mine{border-color:var(--gold-3)}
+.fo-card.mine::after{content:"";position:absolute}
+.fo-card .mine-dot{display:inline-block;width:5px;height:5px;border-radius:50%;
+  background:var(--gold-3);margin-right:5px;vertical-align:1px}
+
+.fo-empty{border:1px dashed var(--line);border-radius:3px;background:rgba(255,255,255,.55);
+  padding:34px 26px;text-align:center}
+.fo-empty b{display:block;font-family:var(--serif);font-size:18px;font-weight:500;
+  color:var(--text);margin-bottom:8px}
+.fo-empty span{font-size:12.8px;color:var(--muted);line-height:1.8}
+
+.fo-bar{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:26px}
+.fo-count{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  font-variant-numeric:tabular-nums}
+
+/* modal */
+.fo-modal{position:fixed;inset:0;z-index:430;display:flex;align-items:center;justify-content:center;
+  padding:22px;background:rgba(14,2,32,.74);opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .3s var(--ease2),visibility .3s}
+.fo-modal.on{opacity:1;visibility:visible;pointer-events:auto}
+.fo-sheet{position:relative;width:min(660px,100%);max-height:86vh;overflow-y:auto;
+  background:var(--cream);border-radius:3px;padding:32px 34px 26px;
+  box-shadow:0 40px 90px -40px rgba(0,0,0,.7);
+  transform:translateY(16px);transition:transform .34s var(--ease)}
+.fo-modal.on .fo-sheet{transform:none}
+@media(max-width:600px){.fo-sheet{padding:26px 20px 22px}}
+.fo-x{position:absolute;right:14px;top:12px;border:0;background:transparent;cursor:pointer;
+  font-size:24px;line-height:1;color:var(--muted);padding:4px 8px;border-radius:2px;
+  transition:.25s var(--ease);font-family:var(--sans)}
+.fo-x:hover{color:var(--royal);background:rgba(32,3,68,.06)}
+.fo-kicker{font-size:9.8px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-3);
+  margin-bottom:12px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.fo-qtext{font-family:var(--serif);font-size:19px;line-height:1.72;color:var(--text);
+  margin:0 0 14px;white-space:pre-wrap;word-break:break-word}
+.fo-tried{font-size:12.8px;line-height:1.75;color:var(--text-2);background:#fff;
+  border-left:2px solid var(--line);padding:10px 14px;margin:0 0 18px;white-space:pre-wrap}
+.fo-tried b{font-size:9.8px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  display:block;margin-bottom:5px;font-weight:600}
+
+.fo-reps{border-top:1px solid var(--line);margin-top:4px;padding-top:16px}
+.fo-rep{padding:0 0 16px;margin-bottom:16px;border-bottom:1px dashed var(--line)}
+.fo-rep:last-child{border-bottom:0;margin-bottom:0;padding-bottom:4px}
+.fo-rep .who{font-size:9.8px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-3);
+  margin-bottom:7px;display:flex;gap:10px;align-items:baseline}
+.fo-rep .who .own{color:var(--royal);font-weight:600}
+.fo-rep .bd{font-size:13.4px;line-height:1.82;color:var(--text);white-space:pre-wrap;word-break:break-word}
+.fo-norep{font-size:12.6px;color:var(--muted);padding:6px 0 18px;line-height:1.7}
+.fo-cform{border-top:1px solid var(--line);margin-top:20px;padding-top:18px}
 
 .admin{display:none;margin-top:20px;border-top:1px dashed var(--line);padding-top:16px}
 .admin.show{display:block}
@@ -544,7 +616,7 @@ footer .fine{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,238,
     <a href="#handouts" data-i18n="nav.handouts">Handouts</a>
     <a href="#lectures" data-i18n="nav.lectures">Lectures</a>
     <a href="#problems" data-i18n="nav.problems">Problems</a>
-    <a href="#ask" data-i18n="nav.ask">Ask</a>
+    <a href="#ask" data-i18n="nav.ask">Board</a>
     <a href="#impact" data-i18n="nav.impact">Impact</a>
   </nav>
 
@@ -686,62 +758,35 @@ footer .fine{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,238,
   </div>
 </section>
 
-<!-- ================= ASK ================= -->
+<!-- ================= BOARD ================= -->
 <section id="ask">
   <div class="wrap">
-    <div class="eyebrow rv" data-i18n="ak.eb">Ask a question</div>
-    <h2 class="display rv" data-i18n-html="ak.h">Ask it here. <span class="thin">It gets a number.</span></h2>
-    <p class="subline rv" data-i18n="ak.sub">If a question stopped you for more than ten minutes, it will stop somebody else too. Send it in; the good ones become numbered problems with a written solution.</p>
+    <div class="eyebrow rv" data-i18n="fo.eb">The board</div>
+    <h2 class="display rv" data-i18n-html="fo.h">Ask it here. <span class="thin">Someone else is stuck on the same line.</span></h2>
+    <p class="subline rv" data-i18n="fo.sub">Questions drift across the board. Click one to read the thread or add an answer — nothing is posted under your real name unless you type it.</p>
 
-    <div class="askgrid">
-      <form class="askform rv" id="askForm" novalidate>
-        <div class="field">
-          <label for="aQ" data-i18n="ak.l1">The question</label>
-          <textarea id="aQ" required data-i18n-ph="ak.p1" placeholder="Type it the way it actually confused you — no need to tidy it up."></textarea>
-          <div class="hint" data-i18n="ak.h1">Rough is fine. Say which step stopped you.</div>
-        </div>
-        <div class="field">
-          <label for="aW" data-i18n="ak.l2">What you tried</label>
-          <textarea id="aW" data-i18n-ph="ak.p2" placeholder="Optional — what you tried, and where it broke."></textarea>
-        </div>
-        <div class="f2">
-          <div class="field">
-            <label for="aT" data-i18n="ak.l3">Which paper</label>
-            <select id="aT">
-              <option value="m9709" data-i18n="ak.t1">9709 · Mathematics</option>
-              <option value="m9231" data-i18n="ak.t2">9231 · Further Mathematics</option>
-              <option value="adm" data-i18n="ak.t3">Admission tests</option>
-              <option value="comp" data-i18n="ak.t4">Competitions &amp; olympiads</option>
-              <option value="other" data-i18n="ak.t5">Something else</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="aN" data-i18n="ak.l4">What to call you</label>
-            <input id="aN" data-i18n-ph="ak.p3" placeholder="Optional">
-          </div>
-        </div>
-        <button class="askbtn" type="submit" data-i18n="ak.btn">Send it</button>
-        <button class="askbtn ghost" type="button" id="btnCode" style="display:none">生成题目代码</button>
-        <div class="askmsg" id="askMsg"></div>
+    <div class="fo-note" id="foNote" hidden></div>
 
-        <div class="admin" id="adminBox">
-          <div class="ttl">Owner · paste into PROBLEMS</div>
-          <code id="adminOut">—</code>
-        </div>
-      </form>
+    <div class="fo-stream rv" id="foStream">
+      <div class="fo-row" data-dir="l"><div class="fo-track" id="foRowA"></div></div>
+      <div class="fo-row" data-dir="r"><div class="fo-track" id="foRowB"></div></div>
+    </div>
+    <div id="foEmpty"></div>
 
-      <div class="asknote rv" data-i18n-html="ak.note">
-        <h3>How this works</h3>
-        <ol>
-          <li>Write the question the way it actually confused you. A photo of your working beats a tidy rewrite.</li>
-          <li>It arrives in my inbox with the paper and the date attached.</li>
-          <li>If it is worth it, it gets a number and goes into the problem index — written solution first, recording if it earns one.</li>
-        </ol>
-        <p>Nothing is published with your name on it unless you ask.</p>
-      </div>
+    <div class="fo-bar rv">
+      <button class="askbtn" id="foNew" type="button" data-i18n="fo.new">Ask a question</button>
+      <span class="fo-count" id="foCount"></span>
     </div>
   </div>
 </section>
+
+<!-- board: thread / compose -->
+<div class="fo-modal" id="foModal" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="fo-sheet">
+    <button class="fo-x" id="foClose" type="button" aria-label="Close">&times;</button>
+    <div id="foPane"></div>
+  </div>
+</div>
 
 <!-- ================= IMPACT ================= -->
 <section class="impact" id="impact">
@@ -809,7 +854,7 @@ footer .fine{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,238,
       <a href="#handouts" data-i18n="nav.handouts">Handouts</a>
       <a href="#lectures" data-i18n="nav.lectures">Lectures</a>
       <a href="#problems" data-i18n="nav.problems">Problems</a>
-      <a href="#ask" data-i18n="nav.ask">Ask</a>
+      <a href="#ask" data-i18n="nav.ask">Board</a>
       <a href="#faq" data-i18n="fq.eb">Questions</a>
     </div>
     <div>
@@ -855,7 +900,7 @@ footer .fine{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,238,
 const I18N = {
   en: {
     "nav.weekly":"Weekly","nav.lectures":"Lectures","nav.handouts":"Handouts",
-    "nav.problems":"Problems","nav.ask":"Ask","nav.impact":"Impact",
+    "nav.problems":"Problems","nav.ask":"Board","nav.impact":"Impact",
     "brandSub":"Cambridge A-Level Centre · est. 2026",
     "hero.kicker":"9709 · 9231 · Admission tests · Competitions &amp; olympiads",
     "hero.title":'Mathematics,<br>in <mark>one place</mark>,<br>for all three years',
@@ -911,6 +956,26 @@ const I18N = {
     "ak.subj":"Question",
     "ak.m1":"Question: ","ak.m2":"What I tried: ","ak.m3":"Paper: ","ak.m4":"Name: ",
     "ak.note":'<h3>How this works</h3><ol><li>Write the question the way it actually confused you. A photo of your working beats a tidy rewrite.</li><li>It arrives in my inbox with the paper and the date attached.</li><li>If it is worth it, it gets a number and goes into the problem index — written solution first, recording if it earns one.</li></ol><p>Nothing is published with your name on it unless you ask.</p>',
+    "fo.eb":"The board",
+    "fo.h":'Ask it here. <span class="thin">Someone else is stuck on the same line.</span>',
+    "fo.sub":"Questions drift across the board. Click one to read the thread or add an answer — nothing is posted under your real name unless you type it.",
+    "fo.new":"Ask a question",
+    "fo.empty_t":"Nothing on the board yet",
+    "fo.empty_s":"The first question can be yours. If a line stopped you for more than ten minutes, it will stop someone else too.",
+    "fo.norep":"No answers yet. If you know this one, be the first.",
+    "fo.yours":"yours","fo.anon":"Anonymous","fo.tried":"What they tried",
+    "fo.reply_l":"Your answer","fo.reply_ph":"Write the step, not just the result. Say where the turn happens.",
+    "fo.reply_btn":"Post answer",
+    "fo.name_l":"Name","fo.name_ph":"Optional",
+    "fo.q_l":"The question","fo.q_ph":"Type it the way it actually confused you — no need to tidy it up.",
+    "fo.q_h":"Rough is fine. Say which step stopped you.",
+    "fo.tried_l":"What you tried","fo.tried_ph":"Optional — what you tried, and where it broke.",
+    "fo.track_l":"Which paper","fo.compose_k":"New question","fo.post":"Put it on the board",
+    "fo.err_q":"Write a little more — at least one full sentence.",
+    "fo.err_short":"Write at least a few words.",
+    "fo.err_net":"Couldn't reach the board. Try again, or email me instead.",
+    "fo.ok_reply":"Posted.",
+    "fo.local":'<div><b>Preview mode.</b> These questions currently live only in this browser — nobody else can see them or reply. To switch the board on for everyone, fill in two values in <code>index.html</code>. The steps are in <b>怎么开通论坛.html</b>, next to your site folder.</div>',
     "fq.eb":"Questions","fq.h":'Things people ask <span class="thin">before they ask</span>',
     "ft.desc":"A mathematics community at Cambridge A-Level Centre, for students in Grades 10 to 12. Free, no sign-up, no ads.",
     "ft.h1":"Sections","ft.h2":"Contact",
@@ -921,7 +986,7 @@ const I18N = {
   },
   zh: {
     "nav.weekly":"每周两题","nav.lectures":"视频","nav.handouts":"讲义",
-    "nav.problems":"题库","nav.ask":"提问","nav.impact":"成果",
+    "nav.problems":"题库","nav.ask":"提问板","nav.impact":"成果",
     "brandSub":"剑桥国际高中 · 始于 2026",
     "hero.kicker":"9709 · 9231 · 入学考试 · 竞赛与奥赛",
     "hero.title":'数学，<br>十年级到十二年级，<br>都在<mark>一个地方</mark>',
@@ -977,6 +1042,26 @@ const I18N = {
     "ak.subj":"提问",
     "ak.m1":"题目：","ak.m2":"我试过：","ak.m3":"卷子：","ak.m4":"称呼：",
     "ak.note":'<h3>流程</h3><ol><li>按你真正卡住的样子写，别整理。草稿的照片比誊清的版本有用。</li><li>它会带着考纲进我的邮箱。</li><li>如果值得，就会拿到编号进题库，先配解答，够格的再录一讲。</li></ol><p>除非你要求，否则不会署你的名字。</p>',
+    "fo.eb":"提问板",
+    "fo.h":'在这里问，<span class="thin">卡住你的那一步，也卡住了别人</span>',
+    "fo.sub":"问题在板上来回流动。点一条看整串回复，或者直接补一个答案。不填名字就是匿名。",
+    "fo.new":"提一个问题",
+    "fo.empty_t":"板上还是空的",
+    "fo.empty_s":"第一个问题可以是你的。如果一道题卡了你十分钟以上，它也会卡住别人。",
+    "fo.norep":"还没有人回答。如果你会，就做第一个。",
+    "fo.yours":"你问的","fo.anon":"匿名","fo.tried":"他试过什么",
+    "fo.reply_l":"你的回答","fo.reply_ph":"写清楚是哪一步，不只是结果。转折发生在哪里。",
+    "fo.reply_btn":"发出去",
+    "fo.name_l":"怎么称呼","fo.name_ph":"可以不填",
+    "fo.q_l":"题目","fo.q_ph":"按你真正卡住的样子写，不用整理。",
+    "fo.q_h":"写得糙没关系，说清楚是哪一步卡住就行。",
+    "fo.tried_l":"你试过什么","fo.tried_ph":"可以不填，写过什么、在哪一步断掉。",
+    "fo.track_l":"哪张卷子","fo.compose_k":"新问题","fo.post":"放到板上",
+    "fo.err_q":"再多写一点，至少一整句。",
+    "fo.err_short":"至少写几个字。",
+    "fo.err_net":"连不上板子。再试一次，或者直接发邮件给我。",
+    "fo.ok_reply":"发出去了。",
+    "fo.local":'<div><b>预览模式。</b>现在这些提问只存在你这台电脑的浏览器里，别人看不到，也回不了。要让所有人都能用，在 <code>index.html</code> 里填两个值就行，步骤写在网站文件夹旁边的 <b>怎么开通论坛.html</b>。</div>',
     "fq.eb":"常见问题","fq.h":'问之前，<span class="thin">先看这几条</span>',
     "ft.desc":"剑桥国际高中数学共同体，面向 10 到 12 年级，免费，不用注册，也没有广告。",
     "ft.h1":"板块","ft.h2":"联系",
@@ -1068,14 +1153,14 @@ const FILTERS = [
    文件放哪儿：site/assets/handouts/ 下面。路径从 index.html 同级算起。
 ------------------------------------------------------------------ */
 const HANDOUTS = [
-  {id:"9709-P1-03", track:"m9709", en:"Trigonometric identities", zh:"三角恒等式", pg:"3 pp",
-   pages:["assets/handouts/9709-P1-03/p1.png",
-          "assets/handouts/9709-P1-03/p2.png",
-          "assets/handouts/9709-P1-03/p3.png"]},
-  {id:"9709-P3-07", track:"m9709", en:"Implicit & parametric differentiation", zh:"隐函数与参数方程求导", pg:"2 pp",
-   pdf:"assets/handouts/9709-P3-07.pdf", thumb:"assets/handouts/9709-P3-07.cover.jpg"},
-  {id:"9231-FP1-07", track:"m9231", en:"Proofs by induction", zh:"数学归纳法", pg:"7 pp",pdf:"assets/handouts/9231-FP1-07.pdf",cover:"assets/covers/9231-FP1-07.jpg"},
-  {id:"BMO-R1", track:"comp", en:"2018-Q5", zh:"多元对称代数式求解", pg:"3 pp",pdf:"assets/handouts/BMO-R1-2018-Q5.pdf"},
+  {id:"9231-FP1-07", track:"m9231", en:"Principles of mathematical induction", zh:"数学归纳法：原理与应用", pg:"7 pp",
+   pdf:"assets/handouts/9231-FP1-07.pdf", thumb:"assets/covers/9231-FP1-07.jpg", fit:"c"},
+  {id:"BMO-R1-21-22", track:"comp", en:"British Mathematical Olympiad · 2021–22", zh:"英国数学奥林匹克 · 2021–22", pg:"2 pp",
+   pdf:"assets/handouts/BMO-R1-2021-22.pdf", thumb:"assets/covers/BMO-R1-2021-22.jpg"},
+  {id:"BMO-R1-25-26", track:"comp", en:"British Mathematical Olympiad · 2025–26", zh:"英国数学奥林匹克 · 2025–26", pg:"3 pp",
+   pdf:"assets/handouts/BMO-R1-2025-26.pdf", thumb:"assets/covers/BMO-R1-2025-26.jpg"},
+  {id:"BMO-R1-05-06", track:"comp", en:"British Mathematical Olympiad · 2005–06 · Q6", zh:"英国数学奥林匹克 · 2005–06 · 第 6 题", pg:"1 p",
+   pdf:"assets/handouts/BMO-R1-2005-06-Q6.pdf", thumb:"assets/covers/BMO-R1-2005-06-Q6.jpg"},
   {id:"9231-FM-05", track:"m9231", en:"Rigid bodies: choosing the pivot", zh:"刚体：支点怎么选", pg:"7 pp"},
   {id:"ADM-01", track:"adm", en:"Reading an admissions question", zh:"怎么读一道入学考试题", pg:"4 pp"},
   {id:"COMP-A-03", track:"comp", en:"Inequalities I", zh:"不等式 I", pg:"9 pp"},
@@ -1212,6 +1297,7 @@ function setLang(l){
   $('#brandSub').textContent = d['brandSub'];
   renderIdx(); renderFilters(); renderVideos(); renderHFilters(); renderHandouts();
   renderQotw(); renderProblems(); renderCases(); renderFaq();
+  foBanner(); foRenderStream();
   try { localStorage.setItem('cmc-lang', l); } catch(e){}
   try {
     const u = new URL(location.href); u.searchParams.set('lang', l);
@@ -1284,7 +1370,7 @@ function renderHandouts(){
     const open = !!kind;
     const thumb = (h.pages && h.pages[0]) || h.thumb || '';
     let cover = '';
-    if (thumb) cover = `<img src="${thumb}" alt="" draggable="false" loading="lazy">`;
+    if (thumb) cover = `<img src="${thumb}" alt="" draggable="false" loading="lazy"${h.fit==='c'?' class="fit-c"':''}>`;
     else if (kind === 'pdf')
       cover = `<div class="pdficon"><b>PDF</b><small>${LANG==='zh'?'点击查看':'Tap to open'}</small></div>`;
     const pill = kind === 'pages'
@@ -1363,71 +1449,271 @@ function renderFaq(){
     </details>`).join('');
 }
 
-/* ================= ask: form -> mail ================= */
-const ASK_MAIL = 'yuchen.xue2009@outlook.com';
+/* ================= board: a shared question board ================= */
+/* 要真正上线：把下面 url 和 key 填上（Supabase 项目的两个值），再推送。空着 = 本机预览。 */
+const FO_CFG = { url:'', key:'' };
+const FO_LIVE = !!(FO_CFG.url && FO_CFG.key);
+const FO_LS = 'mc_board_v1';
+const FO_MINE = 'mc_board_mine';
 const ASK_OWNER = new URL(location.href).searchParams.has('admin');
-function askPayload(){
-  return {
-    q: ($('#aQ').value || '').trim(),
-    w: ($('#aW').value || '').trim(),
-    t: $('#aT').value,
-    n: ($('#aN').value || '').trim()
-  };
+let FO_POSTS = [];
+let FO_OPEN = null;
+let FO_BUSY = false;
+
+const foEsc = s => String(s == null ? '' : s)
+  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+  .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+
+function foMine(){ try { return JSON.parse(localStorage.getItem(FO_MINE) || '[]'); } catch(e){ return []; } }
+function foMarkMine(id){
+  const a = foMine(); const k = String(id);
+  if (!a.includes(k)){ a.push(k); try { localStorage.setItem(FO_MINE, JSON.stringify(a.slice(-80))); } catch(e){} }
 }
-function askBody(p){
-  const L = I18N[LANG];
-  return [
-    L['ak.m1'] + p.q,
-    p.w ? '\n' + L['ak.m2'] + p.w : '',
-    '\n' + L['ak.m3'] + (TRACKS[p.t] ? pickShort(TRACKS[p.t]) : L['ak.t5']),
-    p.n ? '\n' + L['ak.m4'] + p.n : ''
-  ].join('');
-}
-function nextProblemId(){
-  const nums = PROBLEMS.map(p => parseInt(String(p.id).replace(/\D/g,''),10)).filter(n => !isNaN(n));
-  return 'Q-' + String((nums.length ? Math.max(...nums) : 130) + 1).padStart(4,'0');
-}
-function askCode(){
-  const p = askPayload();
-  const esc = s => String(s).replace(/\\/g,'\\\\').replace(/"/g,'\\"').replace(/\n/g,' ');
-  const tr = TRACKS[p.t] ? p.t : 'm9709';
-  return `  {id:"${nextProblemId()}", track:"${tr}", en:"", zh:"${esc(p.q)}", src:"", lv:3},`;
-}
-(function askInit(){
-  const form = $('#askForm'); if (!form) return;
-  const msg = $('#askMsg');
-  if (ASK_OWNER){
-    $('#btnCode').style.display = 'inline-flex';
-    $('#adminBox').classList.add('show');
-  }
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-    const L = I18N[LANG], p = askPayload();
-    if (p.q.length < 6){
-      msg.className = 'askmsg err';
-      msg.textContent = L['ak.err1'];
-      $('#aQ').focus();
-      return;
-    }
-    const body = askBody(p);
-    const subject = '[' + L['ak.subj'] + '] ' + (TRACKS[p.t] ? pickShort(TRACKS[p.t]) : L['ak.t5'])
-                  + ' · ' + p.q.slice(0, 36).replace(/\n/g, ' ');
-    const href = 'mailto:' + ASK_MAIL
-               + '?subject=' + encodeURIComponent(subject)
-               + '&body=' + encodeURIComponent(body);
-    msg.className = 'askmsg';
-    msg.textContent = L['ak.ok'];
-    if (navigator.clipboard) navigator.clipboard.writeText(body).catch(() => {});
-    if (ASK_OWNER) $('#adminOut').textContent = askCode();
-    location.href = href;
+function foLocalAll(){ try { return JSON.parse(localStorage.getItem(FO_LS) || '[]'); } catch(e){ return []; } }
+function foLocalSave(a){ try { localStorage.setItem(FO_LS, JSON.stringify(a)); } catch(e){} }
+
+async function foLoad(){
+  if (!FO_LIVE){ FO_POSTS = foLocalAll(); return; }
+  const r = await fetch(FO_CFG.url + '/rest/v1/forum_posts?select=*&order=created_at.asc', {
+    headers: { apikey: FO_CFG.key, Authorization: 'Bearer ' + FO_CFG.key }
   });
-  if (ASK_OWNER){
-    $('#btnCode').addEventListener('click', () => {
-      const code = askCode();
-      $('#adminOut').textContent = code;
-      if (navigator.clipboard) navigator.clipboard.writeText(code).catch(() => {});
-    });
+  if (!r.ok) throw new Error('load ' + r.status);
+  FO_POSTS = await r.json();
+}
+
+async function foInsert(row){
+  if (!FO_LIVE){
+    const a = foLocalAll();
+    const rec = Object.assign({ id: 'L' + Date.now() + Math.floor(Math.random() * 900), created_at: new Date().toISOString() }, row);
+    a.push(rec); foLocalSave(a); return rec;
   }
+  const r = await fetch(FO_CFG.url + '/rest/v1/forum_posts', {
+    method: 'POST',
+    headers: { apikey: FO_CFG.key, Authorization: 'Bearer ' + FO_CFG.key,
+               'Content-Type': 'application/json', Prefer: 'return=representation' },
+    body: JSON.stringify(row)
+  });
+  if (!r.ok) throw new Error('post ' + r.status);
+  const j = await r.json();
+  return Array.isArray(j) ? j[0] : j;
+}
+
+const foQ = () => FO_POSTS.filter(p => p.parent_id == null)
+  .sort((a, b) => String(b.created_at) > String(a.created_at) ? 1 : -1);
+const foR = id => FO_POSTS.filter(p => String(p.parent_id) === String(id))
+  .sort((a, b) => String(a.created_at) > String(b.created_at) ? 1 : -1);
+
+function foWhen(iso){
+  if (!iso) return '';
+  const d = new Date(iso); if (isNaN(d.getTime())) return '';
+  const p = n => String(n).padStart(2, '0');
+  return p(d.getMonth() + 1) + '-' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes());
+}
+
+function foTrackName(t){
+  const L = I18N[LANG];
+  if (t && TRACKS[t]) return pickShort(TRACKS[t]);
+  return L['ak.t5'];
+}
+
+function foCard(p){
+  const L = I18N[LANG];
+  const n = foR(p.id).length;
+  const mine = foMine().includes(String(p.id));
+  const rep = n ? n + ' ' + (LANG === 'zh' ? '条回复' : (n === 1 ? 'reply' : 'replies'))
+                : (LANG === 'zh' ? '还没有回复' : 'no reply yet');
+  return `<button class="fo-card${mine ? ' mine' : ''}" type="button" data-q="${foEsc(p.id)}">`
+       +   `<div class="q">${foEsc(p.body)}</div>`
+       +   `<div class="f"><span class="tag">${mine ? '<i class="mine-dot"></i>' : ''}${foEsc(foTrackName(p.track))}</span>`
+       +   `<span class="rep${n ? '' : ' zero'}">${rep}</span></div>`
+       + `</button>`;
+}
+
+function foRenderStream(){
+  const A = $('#foRowA'), B = $('#foRowB'), empty = $('#foEmpty'), stream = $('#foStream');
+  if (!A || !B || !stream) return;
+  const L = I18N[LANG];
+  const qs = foQ();
+
+  if (!qs.length){
+    stream.style.display = 'none';
+    empty.innerHTML = `<div class="fo-empty"><b>${L['fo.empty_t']}</b><span>${L['fo.empty_s']}</span></div>`;
+    $('#foCount').textContent = '';
+    return;
+  }
+  stream.style.display = '';
+  empty.innerHTML = '';
+
+  const half = Math.ceil(qs.length / 2);
+  const left = qs.slice(0, half);
+  const right = qs.slice(half).length ? qs.slice(half) : left;
+  const fill = arr => {
+    let out = arr.slice();
+    while (out.length < 6) out = out.concat(arr);
+    return out;
+  };
+  const mk = arr => fill(arr).map(foCard).join('');
+  A.innerHTML = mk(left) + mk(left);
+  B.innerHTML = mk(right) + mk(right);
+  $('#foCount').textContent = qs.length + (LANG === 'zh' ? ' 个问题在板上' : (qs.length === 1 ? ' question on the board' : ' questions on the board'));
+}
+
+function foBanner(){
+  const n = $('#foNote'); if (!n) return;
+  if (FO_LIVE){ n.hidden = true; return; }
+  n.hidden = false;
+  n.innerHTML = I18N[LANG]['fo.local'];
+}
+
+function foShow(){
+  const m = $('#foModal'); if (!m) return;
+  m.classList.add('on'); m.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+function foHide(){
+  const m = $('#foModal'); if (!m) return;
+  m.classList.remove('on'); m.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+  FO_OPEN = null;
+}
+
+function foOpenThread(id){
+  const L = I18N[LANG];
+  const q = FO_POSTS.find(p => String(p.id) === String(id));
+  if (!q) return;
+  FO_OPEN = id;
+  const reps = foR(id);
+  const mine = foMine().includes(String(id));
+  const pane = $('#foPane');
+  pane.innerHTML = `
+    <div class="fo-kicker"><span>${foEsc(foTrackName(q.track))}</span>${mine ? `<span>· ${L['fo.yours']}</span>` : ''}</div>
+    <p class="fo-qtext">${foEsc(q.body)}</p>
+    ${q.tried ? `<div class="fo-tried"><b>${L['fo.tried']}</b>${foEsc(q.tried)}</div>` : ''}
+    <div class="fo-reps">
+      ${reps.length ? reps.map(r => `
+        <div class="fo-rep">
+          <div class="who"><span class="${r.is_owner ? 'own' : ''}">${foEsc(r.name || L['fo.anon'])}</span><span>${foWhen(r.created_at)}</span></div>
+          <div class="bd">${foEsc(r.body)}</div>
+        </div>`).join('') : `<div class="fo-norep">${L['fo.norep']}</div>`}
+    </div>
+    <form class="fo-cform" id="foReplyForm">
+      <div class="field">
+        <label for="foRB">${L['fo.reply_l']}</label>
+        <textarea id="foRB" placeholder="${foEsc(L['fo.reply_ph'])}"></textarea>
+      </div>
+      <div class="field">
+        <label for="foRN">${L['fo.name_l']}</label>
+        <input id="foRN" placeholder="${foEsc(L['fo.name_ph'])}">
+      </div>
+      <button class="askbtn" type="submit">${L['fo.reply_btn']}</button>
+      <div class="askmsg" id="foMsg"></div>
+    </form>`;
+  foShow();
+  const form = $('#foReplyForm');
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const msg = $('#foMsg');
+    const body = ($('#foRB').value || '').trim();
+    if (body.length < 2){ msg.className = 'askmsg err'; msg.textContent = L['fo.err_short']; return; }
+    if (FO_BUSY) return;
+    FO_BUSY = true;
+    const btn = form.querySelector('button[type="submit"]');
+    if (btn) btn.disabled = true;
+    try {
+      const rec = await foInsert({ parent_id: q.id, body,
+        name: ($('#foRN').value || '').trim() || null, is_owner: !!ASK_OWNER });
+      FO_POSTS.push(rec);
+      foRenderStream();
+      foOpenThread(id);
+      const m2 = $('#foMsg'); if (m2) m2.textContent = L['fo.ok_reply'];
+    } catch (err) {
+      msg.className = 'askmsg err'; msg.textContent = L['fo.err_net'];
+      if (btn) btn.disabled = false;
+    } finally { FO_BUSY = false; }
+  });
+}
+
+function foOpenCompose(){
+  const L = I18N[LANG];
+  FO_OPEN = null;
+  $('#foPane').innerHTML = `
+    <div class="fo-kicker"><span>${L['fo.compose_k']}</span></div>
+    <form id="foNewForm">
+      <div class="field">
+        <label for="foQB">${L['fo.q_l']}</label>
+        <textarea id="foQB" placeholder="${foEsc(L['fo.q_ph'])}"></textarea>
+        <div class="hint">${L['fo.q_h']}</div>
+      </div>
+      <div class="field">
+        <label for="foTB">${L['fo.tried_l']}</label>
+        <textarea id="foTB" placeholder="${foEsc(L['fo.tried_ph'])}"></textarea>
+      </div>
+      <div class="f2">
+        <div class="field">
+          <label for="foTS">${L['fo.track_l']}</label>
+          <select id="foTS">
+            <option value="m9709">${L['ak.t1']}</option>
+            <option value="m9231">${L['ak.t2']}</option>
+            <option value="adm">${L['ak.t3']}</option>
+            <option value="comp">${L['ak.t4']}</option>
+            <option value="other">${L['ak.t5']}</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="foNB">${L['fo.name_l']}</label>
+          <input id="foNB" placeholder="${foEsc(L['fo.name_ph'])}">
+        </div>
+      </div>
+      <button class="askbtn" type="submit">${L['fo.post']}</button>
+      <div class="askmsg" id="foMsg"></div>
+    </form>`;
+  foShow();
+  const form = $('#foNewForm');
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const msg = $('#foMsg');
+    const body = ($('#foQB').value || '').trim();
+    if (body.length < 6){ msg.className = 'askmsg err'; msg.textContent = L['fo.err_q']; $('#foQB').focus(); return; }
+    if (FO_BUSY) return;
+    FO_BUSY = true;
+    const btn = form.querySelector('button[type="submit"]');
+    if (btn) btn.disabled = true;
+    try {
+      const rec = await foInsert({
+        body, tried: ($('#foTB').value || '').trim() || null,
+        track: $('#foTS').value,
+        name: ($('#foNB').value || '').trim() || null,
+        is_owner: false
+      });
+      FO_POSTS.push(rec);
+      foMarkMine(rec.id);
+      foRenderStream();
+      foOpenThread(rec.id);
+    } catch (err) {
+      msg.className = 'askmsg err'; msg.textContent = L['fo.err_net'];
+      if (btn) btn.disabled = false;
+    } finally { FO_BUSY = false; }
+  });
+}
+
+(function foInit(){
+  const modal = $('#foModal');
+  if (!modal) return;
+
+  document.addEventListener('click', e => {
+    const card = e.target.closest && e.target.closest('.fo-card');
+    if (card && card.dataset.q) { foOpenThread(card.dataset.q); }
+  });
+  const nb = $('#foNew');
+  if (nb) nb.addEventListener('click', foOpenCompose);
+  const xb = $('#foClose');
+  if (xb) xb.addEventListener('click', foHide);
+  modal.addEventListener('click', e => { if (e.target === modal) foHide(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') foHide(); });
+
+  foBanner();
+  foRenderStream();
+  foLoad().then(() => { foRenderStream(); }).catch(() => { foRenderStream(); });
 })();
 
 const io = new IntersectionObserver(es => {
