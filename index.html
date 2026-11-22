@@ -493,6 +493,12 @@ footer .fine{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,238,
 @keyframes foL{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
 @keyframes foR{from{transform:translate3d(-50%,0,0)}to{transform:translate3d(0,0,0)}}
 @media(prefers-reduced-motion:reduce){.fo-track{animation:none!important}}
+/* few questions: no drifting, just a centred row — otherwise the same card
+   repeats six times to fill the loop and looks like spam */
+.fo-stream.is-static{-webkit-mask-image:none;mask-image:none}
+.fo-stream.is-static .fo-row{overflow:visible;display:flex;justify-content:center}
+.fo-stream.is-static .fo-track{width:auto;flex-wrap:wrap;justify-content:center;
+  animation:none!important;will-change:auto}
 
 .fo-card{flex:0 0 auto;width:272px;background:#fff;border:1px solid var(--line);border-radius:2px;
   padding:15px 17px 13px;cursor:pointer;transition:.38s var(--ease);text-align:left;
@@ -675,9 +681,9 @@ footer .fine{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,238,
 
   <div class="weekbar">
     <span class="tag"><i></i><span data-i18n="wb.tag">This week · 02</span></span>
-    <a href="#weekly" data-i18n="wb.q1">9709 · the integration everybody loses a mark on</a>
+    <a href="#weekly" data-i18n="wb.q1">9709 · three integrals, one idea</a>
     <span class="sep">/</span>
-    <a href="#weekly" data-i18n="wb.q2">AMC 12 · a condition nobody uses</a>
+    <a href="#weekly" data-i18n="wb.q2">BMO1 2026 · the gap that is the answer</a>
   </div>
 </header>
 
@@ -910,8 +916,8 @@ const I18N = {
     "finder.o0":"This week's two questions","finder.o1":"Lecture recordings",
     "finder.o2":"Handouts &amp; notes","finder.o3":"Problem index","finder.o4":"What students achieved",
     "finder.o5":"Ask a question",
-    "wb.tag":"This week · {w}","wb.q1":"9709 · the coefficient that comes from two places",
-    "wb.q2":"ARML · six people, no three in order",
+    "wb.tag":"This week · {w}","wb.q1":"9709 · three integrals, one idea",
+    "wb.q2":"BMO1 2026 · the gap that is the answer",
     "stat.1":"lectures recorded","stat.2":"handouts written",
     "stat.3":"questions answered","stat.4":"study sessions",
     "qw.eb":"Question of the week","qw.h":'Two questions a week. <span class="thin">One easy to get wrong.</span>',
@@ -974,6 +980,10 @@ const I18N = {
     "fo.err_q":"Write a little more — at least one full sentence.",
     "fo.err_short":"Write at least a few words.",
     "fo.err_net":"Couldn't reach the board. Try again, or email me instead.",
+    "fo.err_grant":"The board is built but not open yet — one permission line is missing in the database.",
+    "fo.err_auth":"The board refused the request — the key is wrong, or reading is blocked. Check the two values in <code>index.html</code>.",
+    "fo.err_table":"The board's table is missing, or the address is wrong.",
+    "fo.err_live":"The board cannot load right now. Refresh in a minute — if it stays like this, email me instead.",
     "fo.ok_reply":"Posted.",
     "fo.local":'<div><b>Preview mode.</b> These questions currently live only in this browser — nobody else can see them or reply. To switch the board on for everyone, fill in two values in <code>index.html</code>. The steps are in <b>怎么开通论坛.html</b>, next to your site folder.</div>',
     "fq.eb":"Questions","fq.h":'Things people ask <span class="thin">before they ask</span>',
@@ -996,8 +1006,8 @@ const I18N = {
     "finder.o0":"本周的两道题","finder.o1":"视频讲解",
     "finder.o2":"讲义与板书","finder.o3":"题库","finder.o4":"学生的成果",
     "finder.o5":"提问",
-    "wb.tag":"本周 · {w}","wb.q1":"9709 · 系数来自两个地方",
-    "wb.q2":"ARML · 六个人，不许三人递增",
+    "wb.tag":"本周 · {w}","wb.q1":"9709 · 三道积分，一个思路",
+    "wb.q2":"BMO1 2026 · 那个差就是答案",
     "stat.1":"节课已录像","stat.2":"份讲义",
     "stat.3":"道题有答案","stat.4":"人次来听",
     "qw.eb":"每周两题","qw.h":'每周两道，<span class="thin">一道最容易错。</span>',
@@ -1060,6 +1070,10 @@ const I18N = {
     "fo.err_q":"再多写一点，至少一整句。",
     "fo.err_short":"至少写几个字。",
     "fo.err_net":"连不上板子。再试一次，或者直接发邮件给我。",
+    "fo.err_grant":"表建好了，但还没对公开访问开权限——少一行 GRANT。按 <b>怎么开通论坛.html</b> 把那段 SQL 再跑一遍。",
+    "fo.err_auth":"板子拒绝了请求——key 不对，或者读取权限没开。检查 <code>index.html</code> 里那两个值。",
+    "fo.err_table":"找不到表，或者地址写错了。按 <b>怎么开通论坛.html</b> 把 SQL 跑一遍。",
+    "fo.err_live":"提问板暂时读不出来。过一会儿刷新；一直这样就直接发邮件给我。",
     "fo.ok_reply":"发出去了。",
     "fo.local":'<div><b>预览模式。</b>现在这些提问只存在你这台电脑的浏览器里，别人看不到，也回不了。要让所有人都能用，在 <code>index.html</code> 里填两个值就行，步骤写在网站文件夹旁边的 <b>怎么开通论坛.html</b>。</div>',
     "fq.eb":"常见问题","fq.h":'问之前，<span class="thin">先看这几条</span>',
@@ -1168,25 +1182,26 @@ const HANDOUTS = [
 ];
 
 const QOTW = [
-  {tag:{en:"9709 · Paper 1 · binomial", zh:"9709 · Paper 1 · 二项展开"},
-   en:"The coefficient that comes from two places at once",
-   zh:"系数来自两个地方，不是一个",
-   bEn:"Find the coefficient of x³ in the expansion of (1 + 3x)(1 − 2x)⁷. Most people find one contribution and stop.",
-   bZh:"求 (1 + 3x)(1 − 2x)⁷ 展开式中 x³ 的系数。大多数人找到一份贡献就停手了。",
-   mEn:"9709/12 style · 4 marks",
-   mZh:"9709/12 类型 · 4 分",
-   aEn:"<b>Two sources, not one.</b> x³ is built two ways: the 1 from the first bracket times the x³ term of (1−2x)⁷, and the 3x times its x² term.<br>In (1−2x)⁷ the x³ coefficient is C(7,3)(−2)³ = 35 × (−8) = <b>−280</b>, and the x² coefficient is C(7,2)(−2)² = 21 × 4 = <b>84</b>.<br>So the answer is −280 + 3 × 84 = −280 + 252 = <b>−28</b>.<br><b>Where the marks go:</b> writing only −280 and forgetting the second contribution, or losing the minus sign because (−2)³ is negative. A negative coefficient is perfectly normal — do not correct it.",
-   aZh:"<b>两个来源，不是一个。</b> x³ 由两条路拼成：第一个括号的 1 乘 (1−2x)⁷ 的 x³ 项，以及 3x 乘它的 x² 项。<br>(1−2x)⁷ 里，x³ 的系数 = C(7,3)(−2)³ = 35 × (−8) = <b>−280</b>，x² 的系数 = C(7,2)(−2)² = 21 × 4 = <b>84</b>。<br>所以答案是 −280 + 3 × 84 = −280 + 252 = <b>−28</b>。<br><b>分丢在哪：</b>只写 −280，漏掉第二份；或者把 (−2)³ 的负号弄丢。系数是负数很正常，别去修正它。"},
+  {tag:{en:"9709 · Paper 3 · integration", zh:"9709 · Paper 3 · 积分"},
+   en:"Three integrals that are all the same integral",
+   zh:"三道积分，其实是同一道",
+   bEn:"(a) ∫ 1/x dx &nbsp; (b) ∫₁<sup>e</sup> 1/x dx &nbsp; (c) ∫ x/(x²+1) dx<br>Nothing here needs a trick. The third one is the first one wearing a hat.",
+   bZh:"(a) ∫ 1/x dx　(b) ∫₁<sup>e</sup> 1/x dx　(c) ∫ x/(x²+1) dx<br>三道都不需要技巧。第三道就是第一道戴了个帽子。",
+   mEn:"9709/33 style · three parts · 9 marks total",
+   mZh:"9709/33 类型 · 三小问 · 共 9 分",
+   aEn:"<b>(a) ln|x| + C.</b> The modulus is not decoration: 1/x exists on both sides of 0, ln x does not. 9709 almost always hands you positive limits, so writing ln x rarely loses the mark — but the modulus is the version that is never wrong.<br><b>(b) 1.</b> [ln x]₁<sup>e</sup> = ln e − ln 1 = 1 − 0 = 1. A definite integral has no +C, and ln 1 = 0 is the step people rush.<br><b>(c) ½ ln(x²+1) + C.</b> Let u = x²+1, du = 2x dx, so x dx = ½ du and the integral is ½ ∫ du/u. No modulus this time, because x²+1 &gt; 0 for every real x.<br><b>What is actually being tested:</b> all three are ∫ du/u. (c) only looks different because the du is hiding in the x on top. When you meet a fraction, ask what the top is the derivative of before you do anything else.",
+   aZh:"<b>(a) ln|x| + C。</b>绝对值不是装饰：1/x 在 0 的两侧都有定义，ln x 没有。9709 给的上下限基本都是正的，写 ln x 一般扣不到分，但加了绝对值永远不会错。<br><b>(b) 1。</b>[ln x]₁<sup>e</sup> = ln e − ln 1 = 1 − 0 = 1。定积分没有 +C；另外 ln 1 = 0 这一步是抢时间的重灾区。<br><b>(c) ½ ln(x²+1) + C。</b>令 u = x²+1，du = 2x dx，所以 x dx = ½ du，原式就是 ½ ∫ du/u。这次不用绝对值，因为 x²+1 对任何实数都大于 0。<br><b>这三道考的其实是同一件事：</b>∫ du/u。(c) 之所以看着不一样，只是因为 du 藏在上面那个 x 里。看到分式，先问分子是不是分母的导数，再动手。"},
 
-  {tag:{en:"ARML 2015 · Individual", zh:"ARML 2015 · 个人赛"},
-   en:"Six people, one line, no three in order",
-   zh:"六个人排一列，不许有三人递增",
-   bEn:"Six people of different heights queue for donuts. How many arrangements have no three consecutive people standing in increasing order of height, front to back? 720 is wrong, and 480 is the answer that looks right.",
-   bZh:"六个身高各不相同的人排队买甜甜圈。有多少种排法，使得没有任何三个相邻的人从前往后身高递增？720 是错的，480 是看起来很像对的那个。",
-   mEn:"2015 ARML · Individual Round · Problem 10 · answer 349",
-   mZh:"2015 ARML · 个人赛 · 第 10 题 · 答案 349",
-   aEn:"<b>Count the bad orders instead.</b> There are 6! = 720 in total. Let A, B, C, D be the events that positions (1,2,3), (2,3,4), (3,4,5), (4,5,6) are in increasing height.<br><b>Singles:</b> |A| = 6!/3! = 120 — pick the three people, their order is forced. Same for B, C, D. Subtract 4 × 120 = 480.<br><b>Pairs:</b> the three touching pairs (AB, BC, CD) give 6!/4! = 30 each, so 90. The two pairs with a one-seat gap (AC, BD) give 6!/5! = 6 each, so 12. A and D do not touch at all, so |A∩D| = 6!/(3!·3!) = <b>20</b> — you order each block separately. Add 90 + 12 + 20 = 122.<br><b>Triples:</b> |A∩B∩C| = 6, |B∩C∩D| = 6, |A∩B∩D| = 1, |A∩C∩D| = 1. Subtract 14.<br><b>All four:</b> only the fully sorted line works, so 1. Add it back.<br>720 − 480 + 122 − 14 + 1 = <b>349</b>.<br><b>The whole problem is |A∩D| = 20.</b> A and D are disjoint blocks, so requiring both still leaves the three people inside each block free to stand in any order. Write 6 there instead of 20 and you get 335 — which is why 335 is the most common wrong answer.",
-   aZh:"<b>先数不合要求的排法。</b> 总共 6! = 720 种。设 A、B、C、D 分别是第 (1,2,3)、(2,3,4)、(3,4,5)、(4,5,6) 位身高递增的事件。<br><b>单个：</b> |A| = 6!/3! = 120——挑出这三个人，顺序就定了。B、C、D 同理。减去 4 × 120 = 480。<br><b>两两：</b> 三对相邻的（AB、BC、CD）各 6!/4! = 30，共 90；两对隔一个位置的（AC、BD）各 6!/5! = 6，共 12；而 A 和 D 完全不重叠，|A∩D| = 6!/(3!·3!) = <b>20</b>——两块各自排序，互不相干。加回 90 + 12 + 20 = 122。<br><b>三个：</b> |A∩B∩C| = 6，|B∩C∩D| = 6，|A∩B∩D| = 1，|A∩C∩D| = 1。减去 14。<br><b>四个：</b> 只有全队递增这一种，加回 1。<br>720 − 480 + 122 − 14 + 1 = <b>349</b>。<br><b>整道题的胜负手是 |A∩D| = 20。</b> A 和 D 是两段不相交的区间，同时要求它们递增，等于两块内部各自随便排。这里写成 6 就会得到 335——所以 335 是最常见的错答。"}
+  {tag:{en:"BMO1 2026 · Problem 1", zh:"BMO1 2026 · 第 1 题"},
+   en:"26 numbers, two colours, exactly one hole",
+   zh:"26 个数，两种颜色，中间只空一格",
+   bEn:"Each of 1, 2, 3, …, 26 is coloured red or blue, and at least two are red. The colouring is <i>snug</i> if (largest red) − (smallest red) equals the number of red numbers. How many snug colourings are there?",
+   bZh:"把 1, 2, 3, …, 26 各染成红或蓝，其中至少两个是红的。若「最大的红数 − 最小的红数」正好等于红数的个数，就称这个染色是 snug 的。问一共有多少种 snug 染色？",
+   mEn:"BMO Round 1 · 18 November 2026 · Problem 1 · answer 2600",
+   mZh:"BMO 第一轮 · 2026 年 11 月 18 日 · 第 1 题 · 答案 2600",
+   aEn:"<b>The gap is not a condition. It is a description of the shape.</b><br>Let the smallest red be p, the largest r, and let there be k reds. Snug says k = r − p. But the block p, p+1, …, r holds r − p + 1 numbers, and k = r − p of them are red — so <b>exactly one number strictly between p and r is blue</b>. Everything outside [p, r] is blue by the definition of p and r.<br><b>So a snug colouring is decided entirely by three numbers</b> p &lt; q &lt; r: colour the whole interval red, punch out q, leave the rest blue. Check: smallest red p, largest r, reds = (r − p + 1) − 1 = r − p. Snug — and k = r − p ≥ 2 comes free, because q sits strictly between p and r.<br><b>Conversely</b> every triple p &lt; q &lt; r gives exactly one snug colouring, and different triples give different colourings. So the answer is just the number of triples:<br>C(26, 3) = 26 × 25 × 24 / 6 = <b>2600</b>.<br><b>The trap:</b> summing over the number of reds, Σ (26 − k)(k − 1) for k = 2 … 25, also gives 2600 — and costs ten minutes plus one algebra slip. The triple argument is three lines.<br><b>Second trap:</b> no factor of 2. Outside the interval the colours are forced blue, and p and r are forced red. The triple has no spare choice.",
+   aZh:"<b>那个差不是条件，它描述的是形状。</b><br>设最小红数是 p，最大红数是 r，红数一共 k 个。snug 就是说 k = r − p。而 p, p+1, …, r 这一段一共有 r − p + 1 个数，其中 k = r − p 个是红的——所以<b>p 和 r 之间恰好有一个数是蓝的</b>。区间外面按 p、r 的定义全是蓝的。<br><b>也就是说，一个 snug 染色完全由三个数决定</b> p &lt; q &lt; r：整段涂红，把 q 抠成蓝，外面全蓝。验一下：最小红数 p，最大红数 r，红数 = (r − p + 1) − 1 = r − p。符合；而且因为 q 严格夹在中间，k = r − p ≥ 2 自动成立，「至少两个红」这个条件是白送的。<br><b>反过来</b>，每个三元组 p &lt; q &lt; r 都对应唯一一个 snug 染色，不同的三元组对应不同的染色。所以答案就是三元组的个数：<br>C(26, 3) = 26 × 25 × 24 / 6 = <b>2600</b>。<br><b>容易掉进去的坑：</b>按红数分类去加，Σ (26 − k)(k − 1)，k 从 2 到 25。结果也是 2600，但要算十分钟，中间错一步就全废。三元组那个论证只有三行。<br><b>第二个坑：</b>不要乘 2。区间外面是被迫蓝的，p 和 r 是被迫红的，三元组没有多余的选择。"},
+
 ];
 
 const PROBLEMS = [
@@ -1451,7 +1466,8 @@ function renderFaq(){
 
 /* ================= board: a shared question board ================= */
 /* 要真正上线：把下面 url 和 key 填上（Supabase 项目的两个值），再推送。空着 = 本机预览。 */
-const FO_CFG = { url:'', key:'' };
+const FO_CFG = { url:'https://aitgvqkcmoozwtuuovvr.supabase.co',
+                 key:'sb_publishable_DpfFxSMijhpbbRN-FGr6dg_FpZz2AkF' };
 const FO_LIVE = !!(FO_CFG.url && FO_CFG.key);
 const FO_LS = 'mc_board_v1';
 const FO_MINE = 'mc_board_mine';
@@ -1459,10 +1475,20 @@ const ASK_OWNER = new URL(location.href).searchParams.has('admin');
 let FO_POSTS = [];
 let FO_OPEN = null;
 let FO_BUSY = false;
+let FO_ERR = '';
 
 const foEsc = s => String(s == null ? '' : s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
   .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+
+function foErrText(e){
+  const m = String(e && e.message || '');
+  const L = I18N[LANG];
+  if (/permission denied/i.test(m)) return L['fo.err_grant'];
+  if (/40[13]/.test(m)) return L['fo.err_auth'];
+  if (/404/.test(m))   return L['fo.err_table'];
+  return L['fo.err_net'];
+}
 
 function foMine(){ try { return JSON.parse(localStorage.getItem(FO_MINE) || '[]'); } catch(e){ return []; } }
 function foMarkMine(id){
@@ -1472,12 +1498,30 @@ function foMarkMine(id){
 function foLocalAll(){ try { return JSON.parse(localStorage.getItem(FO_LS) || '[]'); } catch(e){ return []; } }
 function foLocalSave(a){ try { localStorage.setItem(FO_LS, JSON.stringify(a)); } catch(e){} }
 
+/* Supabase now issues two kinds of key: legacy JWT (eyJ…) and the new
+   publishable key (sb_publishable_…). Both are sent as `apikey`; the
+   Authorization header only helps the JWT kind, so on a 401 we retry
+   without it rather than guessing which project is on which system. */
+async function foFetch(path, opts){
+  opts = opts || {};
+  const extra = opts.headers || {};
+  const mk = auth => Object.assign({}, opts, {
+    headers: Object.assign(auth
+      ? { apikey: FO_CFG.key, Authorization: 'Bearer ' + FO_CFG.key }
+      : { apikey: FO_CFG.key }, extra)
+  });
+  let r = await fetch(FO_CFG.url + path, mk(true));
+  if (r.status === 401 || r.status === 403){
+    const body = await r.clone().text();
+    if (!/permission denied/i.test(body)) r = await fetch(FO_CFG.url + path, mk(false));
+  }
+  return r;
+}
+
 async function foLoad(){
   if (!FO_LIVE){ FO_POSTS = foLocalAll(); return; }
-  const r = await fetch(FO_CFG.url + '/rest/v1/forum_posts?select=*&order=created_at.asc', {
-    headers: { apikey: FO_CFG.key, Authorization: 'Bearer ' + FO_CFG.key }
-  });
-  if (!r.ok) throw new Error('load ' + r.status);
+  const r = await foFetch('/rest/v1/forum_posts?select=*&order=created_at.asc');
+  if (!r.ok) throw new Error('load ' + r.status + ' ' + await r.text());
   FO_POSTS = await r.json();
 }
 
@@ -1487,13 +1531,12 @@ async function foInsert(row){
     const rec = Object.assign({ id: 'L' + Date.now() + Math.floor(Math.random() * 900), created_at: new Date().toISOString() }, row);
     a.push(rec); foLocalSave(a); return rec;
   }
-  const r = await fetch(FO_CFG.url + '/rest/v1/forum_posts', {
+  const r = await foFetch('/rest/v1/forum_posts', {
     method: 'POST',
-    headers: { apikey: FO_CFG.key, Authorization: 'Bearer ' + FO_CFG.key,
-               'Content-Type': 'application/json', Prefer: 'return=representation' },
+    headers: { 'Content-Type': 'application/json', Prefer: 'return=representation' },
     body: JSON.stringify(row)
   });
-  if (!r.ok) throw new Error('post ' + r.status);
+  if (!r.ok) throw new Error('post ' + r.status + ' ' + await r.text());
   const j = await r.json();
   return Array.isArray(j) ? j[0] : j;
 }
@@ -1546,22 +1589,39 @@ function foRenderStream(){
 
   const half = Math.ceil(qs.length / 2);
   const left = qs.slice(0, half);
-  const right = qs.slice(half).length ? qs.slice(half) : left;
-  const fill = arr => {
-    let out = arr.slice();
-    while (out.length < 6) out = out.concat(arr);
-    return out;
-  };
-  const mk = arr => fill(arr).map(foCard).join('');
-  A.innerHTML = mk(left) + mk(left);
-  B.innerHTML = mk(right) + mk(right);
+  const right = qs.slice(half);
+  const rowB = B.parentElement;
+  if (rowB) rowB.style.display = '';
+
+  if (qs.length < 4){
+    stream.classList.add('is-static');
+    A.innerHTML = left.map(foCard).join('');
+    B.innerHTML = right.map(foCard).join('');
+    if (rowB && !right.length) rowB.style.display = 'none';
+  } else {
+    stream.classList.remove('is-static');
+    const r = right.length ? right : left;
+    const fill = arr => {
+      let out = arr.slice();
+      while (out.length < 6) out = out.concat(arr);
+      return out;
+    };
+    const mk = arr => fill(arr).map(foCard).join('');
+    A.innerHTML = mk(left) + mk(left);
+    B.innerHTML = mk(r) + mk(r);
+  }
   $('#foCount').textContent = qs.length + (LANG === 'zh' ? ' 个问题在板上' : (qs.length === 1 ? ' question on the board' : ' questions on the board'));
 }
 
 function foBanner(){
   const n = $('#foNote'); if (!n) return;
-  if (FO_LIVE){ n.hidden = true; return; }
+  if (FO_LIVE && !FO_ERR){ n.hidden = true; return; }
   n.hidden = false;
+  if (FO_LIVE){
+    n.innerHTML = foErrText({ message: FO_ERR })
+                + (ASK_OWNER ? ' <code>[' + foEsc(FO_ERR.slice(0, 160)) + ']</code>' : '');
+    return;
+  }
   n.innerHTML = I18N[LANG]['fo.local'];
 }
 
@@ -1627,7 +1687,7 @@ function foOpenThread(id){
       foOpenThread(id);
       const m2 = $('#foMsg'); if (m2) m2.textContent = L['fo.ok_reply'];
     } catch (err) {
-      msg.className = 'askmsg err'; msg.textContent = L['fo.err_net'];
+      msg.className = 'askmsg err'; msg.textContent = foErrText(err);
       if (btn) btn.disabled = false;
     } finally { FO_BUSY = false; }
   });
@@ -1690,7 +1750,7 @@ function foOpenCompose(){
       foRenderStream();
       foOpenThread(rec.id);
     } catch (err) {
-      msg.className = 'askmsg err'; msg.textContent = L['fo.err_net'];
+      msg.className = 'askmsg err'; msg.textContent = foErrText(err);
       if (btn) btn.disabled = false;
     } finally { FO_BUSY = false; }
   });
@@ -1713,7 +1773,8 @@ function foOpenCompose(){
 
   foBanner();
   foRenderStream();
-  foLoad().then(() => { foRenderStream(); }).catch(() => { foRenderStream(); });
+  foLoad().then(() => { FO_ERR = ''; foBanner(); foRenderStream(); })
+    .catch(err => { FO_ERR = String(err && err.message || 'net'); foBanner(); foRenderStream(); });
 })();
 
 const io = new IntersectionObserver(es => {
