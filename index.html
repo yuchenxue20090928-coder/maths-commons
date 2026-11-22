@@ -328,6 +328,8 @@ details.ans .inner b{color:var(--gold)}
   text-align:center;padding:6px 0;text-transform:uppercase}
 .hpage .pgpill{position:absolute;right:8px;bottom:8px;z-index:5;background:rgba(32,3,68,.84);
   color:var(--gold);font-size:9.5px;letter-spacing:.1em;padding:3px 9px;border-radius:100px}
+.hpage .solbadge{position:absolute;left:8px;bottom:8px;z-index:5;background:var(--gold);
+  color:#200344;font-size:9px;font-weight:600;letter-spacing:.14em;padding:3px 8px;border-radius:2px}
 .hpage .pdficon{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
   justify-content:center;gap:10px;color:var(--gold-3);background:#fffdf8}
 .hpage .pdficon b{font-family:var(--serif);font-size:26px;letter-spacing:.06em;color:var(--royal)}
@@ -367,6 +369,12 @@ details.ans .inner b{color:var(--gold)}
   -webkit-user-drag:none;user-select:none;-webkit-user-select:none}
 .vw-pdf{width:100%;height:100%;border:0;background:#fff;border-radius:2px;
   box-shadow:0 34px 90px -34px rgba(0,0,0,.85)}
+.vw-pdffb{width:min(430px,84vw);padding:26px 28px;border-radius:3px;background:#fff;
+  color:#1b1822;text-align:left;box-shadow:0 34px 90px -34px rgba(0,0,0,.85)}
+.vw-pdffb b{display:block;font-size:13.5px;line-height:1.5;margin-bottom:9px}
+.vw-pdffb p{margin:0 0 16px;font-size:12.5px;line-height:1.75;color:#5a5566}
+.vw-pdffb a{display:inline-block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:#200344;text-decoration:none;border-bottom:1px solid #c9a227;padding-bottom:3px}
 .vw-hint{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;
   padding:9px 20px 13px;font-size:10.5px;letter-spacing:.08em;color:rgba(255,255,255,.4)}
 .vw-hint a{color:var(--gold-3);text-decoration:underline;text-underline-offset:3px}
@@ -938,6 +946,10 @@ const I18N = {
     "ho.eb":"Handouts &amp; notes","ho.h":'Read them here. <span class="thin">That is the deal.</span>',
     "ho.sub":"These are the pages I write on while teaching. They are view-only on purpose: no download, no print. If you want a copy, come to a session — that is where they make sense.",
     "ho.note":"ⓘ View-only. Right-click, drag and print are disabled on this page.",
+    "vw.pdfblocked_t":"This viewer cannot display PDFs",
+    "vw.pdfblocked_s":"The page you are looking at is served by a preview that only passes through images and HTML, so the PDF request comes back as “not found”. On the published site the same file opens normally. Use the link below to open the PDF directly.",
+    "vw.pdfopen":"Open the PDF directly",
+    "vw.pdfblocked_h":"<b>PDF</b><span>Blocked in this preview only</span><span>Esc closes</span>",
     "pr.eb":"Problem index","pr.h":'Every question <span class="thin">gets a number</span>',
     "pr.sub":"If you asked it, it is in here. Each entry links to the moment in the recording where that exact question is solved.",
     "pr.c1":"ID","pr.c2":"Problem","pr.c3":"Source","pr.c4":"Level","pr.c5":"Track","pr.watch":"Watch ↗",
@@ -1028,6 +1040,10 @@ const I18N = {
     "ho.eb":"讲义与板书","ho.h":'就在这里读，<span class="thin">条件只有这一个。</span>',
     "ho.sub":"这些是我讲课时写在纸上的东西，故意做成只能看，不能下载也不能打印，想要一份就来现场，那些东西在现场才讲得通。",
     "ho.note":"ⓘ 仅限在线查看。本页已禁用右键、拖拽与打印。",
+    "vw.pdfblocked_t":"这个预览环境打不开 PDF",
+    "vw.pdfblocked_s":"你现在看到的页面由一个预览服务转发，它只放行图片和网页，PDF 请求会被回成「not found」。同一个文件在正式网站上能正常打开。可以点下面的链接直接看这份 PDF。",
+    "vw.pdfopen":"直接打开这份 PDF",
+    "vw.pdfblocked_h":"<b>PDF</b><span>仅在这个预览里被拦</span><span>Esc 关闭</span>",
     "pr.eb":"题库","pr.h":'每道题<span class="thin">都有编号</span>',
     "pr.sub":"你问过的都在这儿，每条都链到讲解里解这道题的那一刻。",
     "pr.c1":"编号","pr.c2":"题目","pr.c3":"来源","pr.c4":"难度","pr.c5":"分类","pr.watch":"看讲解 ↗",
@@ -1153,32 +1169,75 @@ const FILTERS = [
    讲义数据。每一条支持三种写法，随便挑一种：
 
    ① 图片版（一页一个文件）—— 推荐，点开能放大，手机上最稳
-      { ..., pages:["assets/handouts/9709-P1-03/p1.png",
-                    "assets/handouts/9709-P1-03/p2.png"] }
+      { ..., pages:["assets/handouts/xxx/p1.png",
+                    "assets/handouts/xxx/p2.png"] }
 
    ② PDF 版（PPT 直接导出的那种）
-      { ..., pdf:"assets/handouts/9709-P3-07.pdf",
-              thumb:"assets/handouts/9709-P3-07.cover.jpg" }
+      { ..., pdf:"assets/handouts/BMO-R1-2026-27.pdf",
+              thumb:"assets/covers/BMO-R1-2026-27.jpg" }
       thumb 是卡片上的封面图，可以不给；不给就显示一个 PDF 图标
+      横版的文件（比如 PPT 导出的）再加一个 fit:"c"，整页装进去不裁边
 
    ③ 还没传
       { ... }  什么源都不写，卡片会显示「待上传」，点不开
 
-   文件放哪儿：site/assets/handouts/ 下面。路径从 index.html 同级算起。
+   文件放哪儿：assets/handouts/ 下面，封面放 assets/covers/。
+   路径从 index.html 同级算起。
 ------------------------------------------------------------------ */
 const HANDOUTS = [
-  {id:"9231-FP1-07", track:"m9231", en:"Principles of mathematical induction", zh:"数学归纳法：原理与应用", pg:"7 pp",
-   pdf:"assets/handouts/9231-FP1-07.pdf", thumb:"assets/covers/9231-FP1-07.jpg", fit:"c"},
-  {id:"BMO-R1-21-22", track:"comp", en:"British Mathematical Olympiad · 2021–22", zh:"英国数学奥林匹克 · 2021–22", pg:"2 pp",
-   pdf:"assets/handouts/BMO-R1-2021-22.pdf", thumb:"assets/covers/BMO-R1-2021-22.jpg"},
+  {id:"9231-FP1-07", track:"m9231", en:"Principles of mathematical induction", zh:"数学归纳法：原理与应用", pg:"9 pp",
+   thumb:"assets/covers/t-9231-FP1-07.jpg",
+   fit:"c",
+   pages:["assets/handouts/9231-FP1-07/p1.png",
+            "assets/handouts/9231-FP1-07/p2.png",
+            "assets/handouts/9231-FP1-07/p3.png",
+            "assets/handouts/9231-FP1-07/p4.png",
+            "assets/handouts/9231-FP1-07/p5.png",
+            "assets/handouts/9231-FP1-07/p6.png",
+            "assets/handouts/9231-FP1-07/p7.png",
+            "assets/handouts/9231-FP1-07/p8.png",
+            "assets/handouts/9231-FP1-07/p9.png"]},
+  {id:"BMO-R1-26-27", track:"comp", en:"British Mathematical Olympiad · 2026–27", zh:"英国数学奥林匹克 · 2026–27", pg:"3 pp",
+   thumb:"assets/covers/t-BMO-R1-26-27.jpg",
+   pages:["assets/handouts/BMO-R1-26-27/p1.png",
+            "assets/handouts/BMO-R1-26-27/p2.png",
+            "assets/handouts/BMO-R1-26-27/p3.png"]},
   {id:"BMO-R1-25-26", track:"comp", en:"British Mathematical Olympiad · 2025–26", zh:"英国数学奥林匹克 · 2025–26", pg:"3 pp",
-   pdf:"assets/handouts/BMO-R1-2025-26.pdf", thumb:"assets/covers/BMO-R1-2025-26.jpg"},
-  {id:"BMO-R1-05-06", track:"comp", en:"British Mathematical Olympiad · 2005–06 · Q6", zh:"英国数学奥林匹克 · 2005–06 · 第 6 题", pg:"1 p",
-   pdf:"assets/handouts/BMO-R1-2005-06-Q6.pdf", thumb:"assets/covers/BMO-R1-2005-06-Q6.jpg"},
-  {id:"9231-FM-05", track:"m9231", en:"Rigid bodies: choosing the pivot", zh:"刚体：支点怎么选", pg:"7 pp"},
-  {id:"ADM-01", track:"adm", en:"Reading an admissions question", zh:"怎么读一道入学考试题", pg:"4 pp"},
-  {id:"COMP-A-03", track:"comp", en:"Inequalities I", zh:"不等式 I", pg:"9 pp"},
-  {id:"COMP-A-07", track:"comp", en:"The extremal principle", zh:"极端原理", pg:"6 pp"}
+   thumb:"assets/covers/t-BMO-R1-25-26.jpg",
+   pages:["assets/handouts/BMO-R1-25-26/p1.png",
+            "assets/handouts/BMO-R1-25-26/p2.png",
+            "assets/handouts/BMO-R1-25-26/p3.png"]},
+  {id:"BMO-R1-25-26-SOL", track:"comp", en:"British Mathematical Olympiad · 2025–26 · my solutions", zh:"英国数学奥林匹克 · 2025–26 · 我的解答", pg:"3 pp",
+   thumb:"assets/covers/t-BMO-R1-25-26-SOL.jpg",
+   sol:true,
+   pages:["assets/handouts/BMO-R1-25-26-SOL/p1.jpg",
+            "assets/handouts/BMO-R1-25-26-SOL/p2.jpg",
+            "assets/handouts/BMO-R1-25-26-SOL/p3.jpg"]},
+  {id:"BMO-R1-24-25", track:"comp", en:"British Mathematical Olympiad · 2024–25", zh:"英国数学奥林匹克 · 2024–25", pg:"2 pp",
+   thumb:"assets/covers/t-BMO-R1-24-25.jpg",
+   pages:["assets/handouts/BMO-R1-24-25/p1.png",
+            "assets/handouts/BMO-R1-24-25/p2.png"]},
+  {id:"BMO-R1-23-24", track:"comp", en:"British Mathematical Olympiad · 2023–24", zh:"英国数学奥林匹克 · 2023–24", pg:"2 pp",
+   thumb:"assets/covers/t-BMO-R1-23-24.jpg",
+   pages:["assets/handouts/BMO-R1-23-24/p1.png",
+            "assets/handouts/BMO-R1-23-24/p2.png"]},
+  {id:"BMO-R1-22-23", track:"comp", en:"British Mathematical Olympiad · 2022–23", zh:"英国数学奥林匹克 · 2022–23", pg:"2 pp",
+   thumb:"assets/covers/t-BMO-R1-22-23.jpg",
+   pages:["assets/handouts/BMO-R1-22-23/p1.png",
+            "assets/handouts/BMO-R1-22-23/p2.png"]},
+  {id:"BMO-R1-21-22", track:"comp", en:"British Mathematical Olympiad · 2021–22", zh:"英国数学奥林匹克 · 2021–22", pg:"2 pp",
+   thumb:"assets/covers/t-BMO-R1-21-22.jpg",
+   pages:["assets/handouts/BMO-R1-21-22/p1.png",
+            "assets/handouts/BMO-R1-21-22/p2.png"]},
+  {id:"BMO-R1-21-22-SOL", track:"comp", en:"British Mathematical Olympiad · 2021–22 · my solutions", zh:"英国数学奥林匹克 · 2021–22 · 我的解答", pg:"2 pp",
+   thumb:"assets/covers/t-BMO-R1-21-22-SOL.jpg",
+   sol:true,
+   pages:["assets/handouts/BMO-R1-21-22-SOL/p1.jpg",
+            "assets/handouts/BMO-R1-21-22-SOL/p2.jpg"]},
+  {id:"BMO-R1-05-06-Q6", track:"comp", en:"British Mathematical Olympiad · 2005–06 · Q6 · my solution", zh:"英国数学奥林匹克 · 2005–06 · 第 6 题 · 我的解答", pg:"1 p",
+   thumb:"assets/covers/t-BMO-R1-05-06-Q6.jpg",
+   sol:true,
+   pages:["assets/handouts/BMO-R1-05-06-Q6/p1.jpg"]},
 ];
 
 const QOTW = [
@@ -1383,7 +1442,7 @@ function renderHandouts(){
   $('#hgrid').innerHTML = HANDOUTS.map((h,i) => {
     const kind = handSource(h);
     const open = !!kind;
-    const thumb = (h.pages && h.pages[0]) || h.thumb || '';
+    const thumb = h.thumb || (h.pages && h.pages[0]) || '';
     let cover = '';
     if (thumb) cover = `<img src="${thumb}" alt="" draggable="false" loading="lazy"${h.fit==='c'?' class="fit-c"':''}>`;
     else if (kind === 'pdf')
@@ -1391,6 +1450,7 @@ function renderHandouts(){
     const pill = kind === 'pages'
       ? `<span class="pgpill">${h.pages.length} ${LANG==='zh'?'页':'pp'}</span>`
       : (kind === 'pdf' ? '<span class="pgpill">PDF</span>' : '');
+    const sol = h.sol ? `<span class="solbadge">${LANG==='zh'?'解答':'SOL'}</span>` : '';
     const label = open
       ? (LANG==='zh' ? '点击放大' : 'Click to open')
       : (LANG==='zh' ? '待上传' : 'Not yet uploaded');
@@ -1401,6 +1461,7 @@ function renderHandouts(){
         ${cover}
         <div class="wm"><span>MATHS COMMONS · VIEW ONLY · ${h.id}</span></div>
         ${pill}
+        ${sol}
         <div class="lock"><span>${label}</span></div>
       </div>
       <div class="hbody">
@@ -1863,7 +1924,7 @@ const cio = new IntersectionObserver(es => {
 })();
 
 /* ================= handout viewer ================= */
-const VW = { open:false, i:-1, page:0, s:1, tx:0, ty:0, drag:null, pct:100 };
+const VW = { open:false, i:-1, page:0, s:1, tx:0, ty:0, drag:null, pct:100, dead:{} };
 const vwEl = id => document.getElementById(id);
 
 function openHandout(i){
@@ -1959,6 +2020,8 @@ function vwSetPdf(pct){
   const h = HANDOUTS[VW.i];
   if (!h || !h.pdf) return;
   VW.pct = Math.max(50, Math.min(300, pct));
+  vwEl('vwZoom').textContent = VW.pct + '%';
+  if (VW.dead[h.pdf]){ vwPdfMissing(h); return; }
   const f = document.createElement('iframe');
   f.className = 'vw-pdf';
   f.title = h.id;
@@ -1966,7 +2029,23 @@ function vwSetPdf(pct){
   const canvas = vwEl('vwCanvas');
   canvas.innerHTML = '';
   canvas.appendChild(f);
-  vwEl('vwZoom').textContent = VW.pct + '%';
+  if (location.protocol === 'file:') return;
+  const url = h.pdf;
+  fetch(url, { method: 'HEAD', cache: 'no-store' })
+    .then(r => { if (!r.ok){ VW.dead[url] = 1; vwPdfMissing(h); } })
+    .catch(() => { VW.dead[url] = 1; vwPdfMissing(h); });
+}
+
+function vwPdfMissing(h){
+  const canvas = vwEl('vwCanvas');
+  const L = I18N[LANG];
+  canvas.innerHTML = `<div class="vw-pdffb">
+      <b>${L['vw.pdfblocked_t']}</b>
+      <p>${L['vw.pdfblocked_s']}</p>
+      <a href="${h.pdf}" target="_blank" rel="noopener">${L['vw.pdfopen']}</a>
+    </div>`;
+  vwEl('vwHint').innerHTML = L['vw.pdfblocked_h'];
+  vwEl('vwZoom').textContent = '—';
 }
 
 (function vwWire(){
