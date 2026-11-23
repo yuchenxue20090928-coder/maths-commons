@@ -268,7 +268,7 @@ details.ans .inner b{color:var(--gold)}
   .vgrid.solo .vbody{padding:16px 16px 18px}
   .vgrid.solo .vtitle{font-size:15px}
   .vgrid.solo .vdesc{font-size:12.4px;line-height:1.8}
-  .vgrid.solo .vmeta{flex-direction:row;align-items:center;justify-content:space-between}}
+  .vgrid.solo .vmeta{flex-direction:column;align-items:flex-start;gap:9px}}
 @media(max-width:1000px){.vgrid{grid-template-columns:1fr 1fr}}
 @media(max-width:680px){.vgrid{grid-template-columns:1fr}}
 .vcard{border:1px solid var(--line);overflow:hidden;background:#fff;transition:.55s var(--ease);
@@ -300,6 +300,7 @@ details.ans .inner b{color:var(--gold)}
 .vmeta a{color:var(--royal);border-bottom:1px solid rgba(32,3,68,.28);padding-bottom:1px;white-space:nowrap;
   transition:.3s}
 .vmeta a:hover{color:var(--royal-3);border-color:var(--royal-3);letter-spacing:.03em}
+.vlinks{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .vcard.hide{display:none}
 .vdesc{display:none}   /* 只有一条视频、卡片独占一行时才展开简介 */
 
@@ -700,7 +701,7 @@ footer .fine{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,238,
     <div class="stat"><div class="v"><span class="cnt" data-to="1" data-key="lectures">0</span></div>
       <div class="k" data-i18n="stat.2">lectures recorded</div></div>
     <div class="stat"><div class="v"><span class="cnt" data-to="30" data-key="sessions">0</span><small>+</small></div>
-      <div class="k" data-i18n="stat.3">views on Bilibili</div></div>
+      <div class="k" data-i18n="stat.3">views on Bilibili &amp; YouTube</div></div>
   </div>
 </section>
 
@@ -741,7 +742,7 @@ footer .fine{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,238,
   <div class="wrap">
     <div class="eyebrow rv" data-i18n="lec.eb">Lecture recordings</div>
     <h2 class="display rv" data-i18n-html="lec.h">Every lecture, <span class="thin">filed by code</span></h2>
-    <p class="subline rv" data-i18n="lec.sub">Numbered, not dated. A lecture keeps its code for ever, so something sent to you in September still makes sense in June. Clicking a card opens the matching part on Bilibili.</p>
+    <p class="subline rv" data-i18n="lec.sub">Numbered, not dated. A lecture keeps its code for ever, so something sent to you in September still makes sense in June. Every recording is on Bilibili and on YouTube — open whichever one you can reach.</p>
     <div class="filters rv" id="filters"></div>
     <div class="vgrid" id="vgrid"></div>
   </div>
@@ -849,6 +850,7 @@ footer .fine{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,238,
       <h4 data-i18n="ft.h2">Contact</h4>
       <a href="mailto:yuchen.xue2009@outlook.com">yuchen.xue2009@outlook.com</a>
       <a href="https://space.bilibili.com/1240760316" target="_blank" rel="noopener">Bilibili · UID 1240760316 ↗</a>
+      <a href="https://www.youtube.com/@BillyTheCreator-2009" target="_blank" rel="noopener">YouTube · @BillyTheCreator-2009 ↗</a>
     </div>
   </div>
   <div class="wrap" style="display:block">
@@ -901,7 +903,7 @@ const I18N = {
     "wb.tag":"This week · {w}","wb.q1":"9709 · three integrals, one idea",
     "wb.q2":"BMO1 2026 · the gap that is the answer",
     "stat.1":"handouts written","stat.2":"lectures recorded",
-    "stat.3":"views on Bilibili",
+    "stat.3":"views on Bilibili &amp; YouTube",
     "qw.eb":"Question of the week","qw.h":'Two questions a week. <span class="thin">One easy to get wrong.</span>',
     "qw.sub":"Every Monday: one past-paper question most people lose marks on, and one competition problem from AMC, AIME or BMO. Work them before you open the answer.",
     "tr.eb":"Contents","tr.h":'Four syllabuses, <span class="thin">one community</span>',
@@ -916,7 +918,7 @@ const I18N = {
     "idx.4t":"Competitions &amp; olympiads","idx.4s":"AMC · AIME · BMO",
     "idx.4d":"Invariants, extremal principle, construction — taught from problems you cannot yet do.",
     "lec.eb":"Lecture recordings","lec.h":'Every lecture, <span class="thin">filed by code</span>',
-    "lec.sub":"Numbered, not dated. A lecture keeps its code for ever, so something sent to you in September still makes sense in June. Clicking a card opens the matching part on Bilibili.",
+    "lec.sub":"Numbered, not dated. A lecture keeps its code for ever, so something sent to you in September still makes sense in June. Every recording is on Bilibili and on YouTube — open whichever one you can reach.",
     "ho.eb":"Handouts &amp; notes","ho.h":'Read them here. <span class="thin">That is the deal.</span>',
     "ho.sub":"These are the pages I write on while teaching. They are view-only on purpose: no download, no print. If you want a copy, come to a session — that is where they make sense.",
     "ho.note":"ⓘ View-only. Right-click, drag and print are disabled on this page.",
@@ -992,7 +994,7 @@ const I18N = {
     "wb.tag":"本周 · {w}","wb.q1":"9709 · 三道积分，一个思路",
     "wb.q2":"BMO1 2026 · 那个差就是答案",
     "stat.1":"份讲义","stat.2":"节课已录像",
-    "stat.3":"次播放",
+    "stat.3":"总播放量",
     "qw.eb":"每周两题","qw.h":'每周两道，<span class="thin">一道最容易错。</span>',
     "qw.sub":"每周一放两道：一道大多数人都会丢分的真题，加一道 AMC、AIME、BMO 或 ARML 的竞赛题，先自己做，做完了再展开答案。",
     "tr.eb":"目录","tr.h":'四套考纲，<span class="thin">一个共同体</span>',
@@ -1007,7 +1009,7 @@ const I18N = {
     "idx.4t":"竞赛与奥赛","idx.4s":"AMC · AIME · BMO",
     "idx.4d":"不变量、极端原理、构造，都从你还做不出来的那道题讲起。",
     "lec.eb":"视频讲解","lec.h":'每一讲，<span class="thin">按编号归档</span>',
-    "lec.sub":"按编号，不按日期，一讲的编号永远不变，九月发给你的东西，六月翻出来还对得上，点卡片直接跳到 B 站对应的分 P。",
+    "lec.sub":"按编号，不按日期，一讲的编号永远不变，九月发给你的东西，六月翻出来还对得上，每讲 B 站和 YouTube 都有一份，哪边能打开就从哪边看。",
     "ho.eb":"讲义与板书","ho.h":'就在这里读，<span class="thin">条件只有这一个。</span>',
     "ho.sub":"这些是我讲课时写在纸上的东西，故意做成只能看，不能下载也不能打印，想要一份就来现场，那些东西在现场才讲得通。",
     "ho.note":"ⓘ 仅限在线查看。本页已禁用右键、拖拽与打印。",
@@ -1092,11 +1094,13 @@ const IDX = [
      {id:"9231-P1-04", track:"m9231", dur:"31:02",
       en:"...", zh:"...",
       cover:"assets/covers/9231-P1-04.jpg",
-      url:"https://www.bilibili.com/video/BVxxxxxxxx/"}
+      url:"https://www.bilibili.com/video/BVxxxxxxxx/",
+      yt:"https://www.youtube.com/watch?v=xxxxxxxxxxx"}
 
    封面尺寸用 16:9（1280×720 或 1200×675 都行），放 assets/covers/。
    不写 cover 的话，卡片会退回深紫色底 + 编号的那种样式。
-   不写 url 的话，「在 B 站看」会退回你的个人主页。
+   不写 url 的话，「B 站」会退回你的个人主页。
+   不写 yt 的话，只显示 B 站一个链接；写了就 B 站 + YouTube 两个一起出。
 
    想用 B 站视频自己的封面：在 B 站播放页右键封面图 →「复制图片地址」，
    把那张图下载下来改名放进去就行，别直接链 B 站的地址，它会防盗链。
@@ -1109,7 +1113,8 @@ const VIDEOS = [
    den:"Chapter 3 of the Further Maths textbook, worked from the page up: the standard results for Σr, Σr² and Σr³, then the method of differences — the part that looks like a trick and is really just telescoping.",
    dzh:"进阶数学第三章，从书上那一页讲起：Σr、Σr²、Σr³ 的标准结果，然后是差分法——看起来像技巧，其实是相消。",
    cover:"assets/covers/9231-P1-03.jpg",
-   url:"https://www.bilibili.com/video/BV1kVxg6eEKR/"}
+   url:"https://www.bilibili.com/video/BV1kVxg6eEKR/",
+   yt:"https://www.youtube.com/@BillyTheCreator-2009"}
 ];
 const FILTERS = [
   {k:"all", en:"All", zh:"全部"},
@@ -1270,8 +1275,8 @@ const QOTW = [
 
 const FAQ = [
   {q:{en:"Does it cost anything?", zh:"要钱吗？"},
-   a:{en:"No. No account, no fee, no ads. The recordings sit on Bilibili and the rest of the site is one HTML file.",
-      zh:"不要。不用注册，不收费，也没有广告。视频放在 B 站，网站本身就是一个 HTML 文件。"}},
+   a:{en:"No. No account, no fee, no ads. The recordings sit on Bilibili and on YouTube; the rest of the site is one HTML file.",
+      zh:"不要。不用注册，不收费，也没有广告。视频 B 站和 YouTube 都有，网站本身就是一个 HTML 文件。"}},
   {q:{en:"Why can I not download the handouts?", zh:"讲义为什么不能下载？"},
    a:{en:"Because those pages only work while they are being talked through. A copy on your phone is a page of symbols with nothing attached to it. Come to a session and you get the paper itself.",
       zh:"因为那些纸是讲的时候才成立的，脱离现场就只剩一页记号。想要就来现场，纸会直接给你。"}},
@@ -1334,7 +1339,8 @@ document.addEventListener('click', e => {
    BASE = 站外已经发过、但没列进这个网站的条数。
    页面上的数字 = BASE + 数组长度，所以你往下面 VIDEOS / HANDOUTS
    里加一条，首页的数字自己就变了，不用回来改。
-   sessions 是 B 站的总播放量，没有数组可数，只能手填，改了要自己回来更新。
+   sessions 是 B 站 + YouTube 两个平台加起来的播放量，没有数组可数，只能手填，
+   涨了就回来改这一个数字（两边播放量相加）。
    如果 BASE 写得比实际多，改掉——招生官会去 B 站点开核对。 */
 const BASE = { lectures: 0, handouts: 0, sessions: 30 };
 
@@ -1417,7 +1423,10 @@ function renderVideos(){
         ${v.den ? `<p class="vdesc">${LANG==='zh'?v.dzh:v.den}</p>` : ''}
         <div class="vmeta">
           <span>${LANG==='zh'?'完整讲解':'Full walkthrough'}</span>
-          <a href="${v.url || 'https://space.bilibili.com/1240760316'}" target="_blank" rel="noopener">${LANG==='zh'?'在 B 站看 ↗':'Watch ↗'}</a>
+          <span class="vlinks">
+            <a href="${v.url || 'https://space.bilibili.com/1240760316'}" target="_blank" rel="noopener">${LANG==='zh'?'B 站 ↗':'Bilibili ↗'}</a>
+            ${v.yt ? `<a href="${v.yt}" target="_blank" rel="noopener">YouTube ↗</a>` : ''}
+          </span>
         </div>
       </div>
     </article>`).join('');
