@@ -151,7 +151,7 @@ h1.hero-title mark::after{content:"";position:absolute;left:-2px;right:-2px;bott
 .stats{background:var(--royal);color:#fff;padding:0;position:relative;overflow:hidden}
 .stats::before{content:"";position:absolute;inset:0;
   background:radial-gradient(70% 120% at 50% 0%,rgba(255,238,176,.09),transparent 70%)}
-.stats .wrap{position:relative;display:grid;grid-template-columns:repeat(4,1fr);
+.stats .wrap{position:relative;display:grid;grid-template-columns:repeat(3,1fr);
   border-top:1px solid rgba(255,238,176,.22)}
 .stat{padding:44px 26px 42px;border-right:1px solid rgba(255,238,176,.14);overflow:hidden}
 .stat:last-child{border-right:0}
@@ -169,9 +169,10 @@ h1.hero-title mark::after{content:"";position:absolute;left:-2px;right:-2px;bott
   transition:transform 1s var(--ease) .14s,opacity .85s var(--ease) .14s}
 .stat:nth-child(even) .k{transform:translateX(34px)}
 .stat.in .k{transform:none;opacity:1}
-@media(max-width:900px){.stats .wrap{grid-template-columns:1fr 1fr}
-  .stat{border-bottom:1px solid rgba(255,238,176,.14);padding:30px 18px}
-  .stat:nth-child(2n){border-right:0}}
+@media(max-width:900px){.stats .wrap{grid-template-columns:repeat(3,1fr)}
+  .stat{padding:28px 12px}
+  .stat .v{font-size:clamp(1.7rem,7vw,2.4rem)}
+  .stat .k{font-size:8.6px;letter-spacing:.1em;margin-top:10px}}
 
 /* ================= sections ================= */
 section{padding:98px 0;scroll-margin-top:68px;position:relative}
@@ -255,6 +256,19 @@ details.ans .inner b{color:var(--gold)}
 .chip:hover{border-color:var(--royal);color:var(--royal);transform:translateY(-1px)}
 .chip.on{background:var(--royal);border-color:var(--royal);color:var(--gold)}
 .vgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.vgrid.solo{grid-template-columns:1fr;max-width:1080px}
+.vgrid.solo .vcard{display:grid;grid-template-columns:1.55fr 1fr}
+.vgrid.solo .thumb{aspect-ratio:16/9}
+.vgrid.solo .vbody{padding:26px 28px 28px;justify-content:center;gap:9px}
+.vgrid.solo .vtag{font-size:10px}
+.vgrid.solo .vtitle{font-size:18px;line-height:1.45}
+.vgrid.solo .vdesc{display:block;font-size:13px;line-height:1.85;color:var(--text-2);margin:2px 0 0;max-width:34em}
+.vgrid.solo .vmeta{flex-direction:column;align-items:flex-start;gap:7px;margin-top:12px}
+@media(max-width:760px){.vgrid.solo .vcard{grid-template-columns:1fr}
+  .vgrid.solo .vbody{padding:16px 16px 18px}
+  .vgrid.solo .vtitle{font-size:15px}
+  .vgrid.solo .vdesc{font-size:12.4px;line-height:1.8}
+  .vgrid.solo .vmeta{flex-direction:row;align-items:center;justify-content:space-between}}
 @media(max-width:1000px){.vgrid{grid-template-columns:1fr 1fr}}
 @media(max-width:680px){.vgrid{grid-template-columns:1fr}}
 .vcard{border:1px solid var(--line);overflow:hidden;background:#fff;transition:.55s var(--ease);
@@ -287,6 +301,7 @@ details.ans .inner b{color:var(--gold)}
   transition:.3s}
 .vmeta a:hover{color:var(--royal-3);border-color:var(--royal-3);letter-spacing:.03em}
 .vcard.hide{display:none}
+.vdesc{display:none}   /* 只有一条视频、卡片独占一行时才展开简介 */
 
 /* ================= handouts ================= */
 .hgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
@@ -388,22 +403,6 @@ details.ans .inner b{color:var(--gold)}
   .vw-stage{padding:10px}
   .vw-hint{font-size:9.5px;gap:10px}
 }
-
-/* ================= problems ================= */
-.ptable{width:100%;border-collapse:collapse;font-size:13.2px}
-.ptable th{text-align:left;font-weight:600;font-size:10px;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--muted);padding:10px 12px;border-bottom:1px solid var(--royal)}
-.ptable td{padding:15px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
-.ptable tbody tr{transition:background .35s var(--ease)}
-.ptable tbody tr:hover td{background:var(--cream-2)}
-.ptable .qid{font-variant-numeric:tabular-nums;color:var(--muted);font-size:11.4px;white-space:nowrap}
-.ptable .src{color:var(--text-2);font-size:12px}
-.plink{border-bottom:1px solid transparent;transition:.3s}
-.plink:hover{color:var(--royal-3);border-bottom-color:rgba(32,3,68,.4)}
-.diff{color:var(--gold-3);letter-spacing:2px;font-size:10px;white-space:nowrap}
-.watch{font-size:12px;color:var(--royal);border-bottom:1px solid rgba(32,3,68,.28);white-space:nowrap;transition:.3s}
-.watch:hover{color:var(--royal-3);border-color:var(--royal-3)}
-@media(max-width:760px){.hide-s{display:none}}
 
 /* ================= impact ================= */
 .impact{background:var(--royal);color:#fff}
@@ -629,7 +628,6 @@ footer .fine{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,238,
     <a href="#weekly" class="hot" data-i18n="nav.weekly">Weekly</a>
     <a href="#handouts" data-i18n="nav.handouts">Handouts</a>
     <a href="#lectures" data-i18n="nav.lectures">Lectures</a>
-    <a href="#problems" data-i18n="nav.problems">Problems</a>
     <a href="#ask" data-i18n="nav.ask">Board</a>
     <a href="#impact" data-i18n="nav.impact">Impact</a>
   </nav>
@@ -673,7 +671,6 @@ footer .fine{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,238,
         <option value="#weekly" data-i18n="finder.o0">This week's two questions</option>
         <option value="#handouts" data-i18n="finder.o2">Handouts &amp; notes</option>
         <option value="#lectures" data-i18n="finder.o1">Lecture recordings</option>
-        <option value="#problems" data-i18n="finder.o3">Problem index</option>
         <option value="#ask" data-i18n="finder.o5">Ask a question</option>
         <option value="#impact" data-i18n="finder.o4">What students achieved</option>
       </select>
@@ -698,14 +695,12 @@ footer .fine{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,238,
 <!-- ================= STATS ================= -->
 <section class="stats" id="stats" style="padding:0">
   <div class="wrap">
-    <div class="stat"><div class="v"><span class="cnt" data-to="64" data-key="lectures">0</span></div>
-      <div class="k" data-i18n="stat.1">lectures recorded</div></div>
-    <div class="stat"><div class="v"><span class="cnt" data-to="52" data-key="handouts">0</span></div>
-      <div class="k" data-i18n="stat.2">handouts written</div></div>
-    <div class="stat"><div class="v"><span class="cnt" data-to="318" data-key="problems">0</span></div>
-      <div class="k" data-i18n="stat.3">questions answered</div></div>
-    <div class="stat"><div class="v"><span class="cnt" data-to="1240" data-key="sessions">0</span><small>+</small></div>
-      <div class="k" data-i18n="stat.4">study sessions</div></div>
+    <div class="stat"><div class="v"><span class="cnt" data-to="23" data-key="handouts">0</span></div>
+      <div class="k" data-i18n="stat.1">handouts written</div></div>
+    <div class="stat"><div class="v"><span class="cnt" data-to="1" data-key="lectures">0</span></div>
+      <div class="k" data-i18n="stat.2">lectures recorded</div></div>
+    <div class="stat"><div class="v"><span class="cnt" data-to="30" data-key="sessions">0</span><small>+</small></div>
+      <div class="k" data-i18n="stat.3">views on Bilibili</div></div>
   </div>
 </section>
 
@@ -749,26 +744,6 @@ footer .fine{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,238,
     <p class="subline rv" data-i18n="lec.sub">Numbered, not dated. A lecture keeps its code for ever, so something sent to you in September still makes sense in June. Clicking a card opens the matching part on Bilibili.</p>
     <div class="filters rv" id="filters"></div>
     <div class="vgrid" id="vgrid"></div>
-  </div>
-</section>
-
-<!-- ================= PROBLEMS ================= -->
-<section id="problems">
-  <div class="wrap">
-    <div class="eyebrow rv" data-i18n="pr.eb">Problem index</div>
-    <h2 class="display rv" data-i18n-html="pr.h">Every question <span class="thin">gets a number</span></h2>
-    <p class="subline rv" data-i18n="pr.sub">If you asked it, it is in here. Each entry links to the moment in the recording where that exact question is solved.</p>
-    <table class="ptable rv">
-      <thead><tr>
-        <th style="width:78px" data-i18n="pr.c1">ID</th>
-        <th data-i18n="pr.c2">Problem</th>
-        <th style="width:94px" data-i18n="pr.c5">Track</th>
-        <th style="width:158px" class="hide-s" data-i18n="pr.c3">Source</th>
-        <th style="width:70px" data-i18n="pr.c4">Level</th>
-        <th style="width:84px"></th>
-      </tr></thead>
-      <tbody id="ptbody"></tbody>
-    </table>
   </div>
 </section>
 
@@ -867,7 +842,6 @@ footer .fine{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,238,
       <a href="#weekly" data-i18n="nav.weekly">Weekly</a>
       <a href="#handouts" data-i18n="nav.handouts">Handouts</a>
       <a href="#lectures" data-i18n="nav.lectures">Lectures</a>
-      <a href="#problems" data-i18n="nav.problems">Problems</a>
       <a href="#ask" data-i18n="nav.ask">Board</a>
       <a href="#faq" data-i18n="fq.eb">Questions</a>
     </div>
@@ -914,20 +888,20 @@ footer .fine{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,238,
 const I18N = {
   en: {
     "nav.weekly":"Weekly","nav.lectures":"Lectures","nav.handouts":"Handouts",
-    "nav.problems":"Problems","nav.ask":"Board","nav.impact":"Impact",
+    "nav.ask":"Board","nav.impact":"Impact",
     "brandSub":"Cambridge A-Level Centre · est. 2026",
     "hero.kicker":"9709 · 9231 · Admission tests · Competitions &amp; olympiads",
     "hero.title":'Mathematics,<br>in <mark>one place</mark>,<br>for all three years',
-    "hero.lede":'A student-run mathematics community at Cambridge A-Level Centre. Lectures, handouts and a numbered archive of every question anyone has asked — covering <em>9709, 9231, admission tests and olympiad</em>. No login, no charge.',
+    "hero.lede":'A student-run mathematics community at Cambridge A-Level Centre. Lectures, handouts and an open board for questions — covering <em>9709, 9231, admission tests and olympiad</em>. No login, no charge.',
     "hero.founder":"Founded and run by one student in 2026, alongside the school maths club — not under it. Open to Grades 10, 11 and 12.",
     "finder.lab":"I am looking for","finder.ph":"Choose a section",
     "finder.o0":"This week's two questions","finder.o1":"Lecture recordings",
-    "finder.o2":"Handouts &amp; notes","finder.o3":"Problem index","finder.o4":"What students achieved",
+    "finder.o2":"Handouts &amp; notes","finder.o4":"What students achieved",
     "finder.o5":"Ask a question",
     "wb.tag":"This week · {w}","wb.q1":"9709 · three integrals, one idea",
     "wb.q2":"BMO1 2026 · the gap that is the answer",
-    "stat.1":"lectures recorded","stat.2":"handouts written",
-    "stat.3":"questions answered","stat.4":"study sessions",
+    "stat.1":"handouts written","stat.2":"lectures recorded",
+    "stat.3":"views on Bilibili",
     "qw.eb":"Question of the week","qw.h":'Two questions a week. <span class="thin">One easy to get wrong.</span>',
     "qw.sub":"Every Monday: one past-paper question most people lose marks on, and one competition problem from AMC, AIME or BMO. Work them before you open the answer.",
     "tr.eb":"Contents","tr.h":'Four syllabuses, <span class="thin">one community</span>',
@@ -950,9 +924,6 @@ const I18N = {
     "vw.pdfblocked_s":"The page you are looking at is served by a preview that only passes through images and HTML, so the PDF request comes back as “not found”. On the published site the same file opens normally. Use the link below to open the PDF directly.",
     "vw.pdfopen":"Open the PDF directly",
     "vw.pdfblocked_h":"<b>PDF</b><span>Blocked in this preview only</span><span>Esc closes</span>",
-    "pr.eb":"Problem index","pr.h":'Every question <span class="thin">gets a number</span>',
-    "pr.sub":"If you asked it, it is in here. Each entry links to the moment in the recording where that exact question is solved.",
-    "pr.c1":"ID","pr.c2":"Problem","pr.c3":"Source","pr.c4":"Level","pr.c5":"Track","pr.watch":"Watch ↗",
     "im.eb":"Impact","im.h":'What actually <span class="thin">changed</span>',
     "im.sub":"Updated once a term. Real numbers from the sessions, not estimates.",
     "im.c1":"Term","im.c2":"Students","im.c3":"Homework rate","im.c4":"Pre-test","im.c5":"Post-test",
@@ -960,7 +931,7 @@ const I18N = {
     "me.eb":"Method","me.h":'Why it is taught <span class="thin">this way</span>',
     "me.title":"Let you fail first. Then hand over the tool.",
     "me.body":'<p>The most common failure in teaching mathematics is treating a method as content: show a neat trick, then set three problems that happen to use it. Everyone gets full marks on the day; two weeks later, the same idea in a different dress defeats them.</p><p>Because the trick was never <strong>needed</strong>. It was only <strong>announced</strong>.</p><div class="pull">So every lecture here opens with a problem your current tools cannot solve. You sit with it for five minutes, the gap becomes real, and only then does the instrument arrive.</div><p>The cost is pace. The core material could be covered in fewer sessions; the extra ones are spent entirely on why each tool has to be shaped the way it is.</p><p>I think the trade is worth it. Tools get forgotten. Gaps do not.</p>',
-    "ak.eb":"Ask a question","ak.h":'Ask it here. <span class="thin">It gets a number.</span>',
+    "ak.eb":"Ask a question","ak.h":'Ask it here. <span class="thin">It goes on the board.</span>',
     "ak.sub":"If a question stopped you for more than ten minutes, it will stop somebody else too. Send it in; the good ones become numbered problems with a written solution.",
     "ak.l1":"The question","ak.p1":"Type it the way it actually confused you — no need to tidy it up.",
     "ak.h1":"Rough is fine. Say which step stopped you.",
@@ -973,7 +944,7 @@ const I18N = {
     "ak.err1":"Write a little more — at least one full sentence, so I can see where it broke.",
     "ak.subj":"Question",
     "ak.m1":"Question: ","ak.m2":"What I tried: ","ak.m3":"Paper: ","ak.m4":"Name: ",
-    "ak.note":'<h3>How this works</h3><ol><li>Write the question the way it actually confused you. A photo of your working beats a tidy rewrite.</li><li>It arrives in my inbox with the paper and the date attached.</li><li>If it is worth it, it gets a number and goes into the problem index — written solution first, recording if it earns one.</li></ol><p>Nothing is published with your name on it unless you ask.</p>',
+    "ak.note":'<h3>How this works</h3><ol><li>Write the question the way it actually confused you. A photo of your working beats a tidy rewrite.</li><li>It arrives in my inbox with the paper and the date attached.</li><li>If it is worth it, it goes up on the board with a written answer — and becomes a lecture if enough people are stuck on the same line.</li></ol><p>Nothing is published with your name on it unless you ask.</p>',
     "fo.eb":"The board",
     "fo.h":'Ask it here. <span class="thin">Someone else is stuck on the same line.</span>',
     "fo.sub":"Questions drift across the board. Click one to read the thread or add an answer — nothing is posted under your real name unless you type it.",
@@ -1008,20 +979,20 @@ const I18N = {
   },
   zh: {
     "nav.weekly":"每周两题","nav.lectures":"视频","nav.handouts":"讲义",
-    "nav.problems":"题库","nav.ask":"提问板","nav.impact":"成果",
+    "nav.ask":"提问板","nav.impact":"成果",
     "brandSub":"剑桥国际高中 · 始于 2026",
     "hero.kicker":"9709 · 9231 · 入学考试 · 竞赛与奥赛",
     "hero.title":'数学，<br>十年级到十二年级，<br>都在<mark>一个地方</mark>',
-    "hero.lede":'剑桥国际高中数学共同体是学生自办的：讲过的课都录下来，写过的板书都存下来，每道被问到的题都编上号，从 9709、9231 到入学考试和竞赛都在里面，不用登录，也不收费。',
+    "hero.lede":'剑桥国际高中数学共同体是学生自办的：讲过的课都录下来，写过的板书都存下来，有问题就丢到提问板上，从 9709、9231 到入学考试和竞赛都在里面，不用登录，也不收费。',
     "hero.founder":"2026 年由一名学生独立创办、独立运营，和学校数学社是并行的两件事，不从属于它，面向 10、11、12 年级。",
     "finder.lab":"我想找","finder.ph":"选择板块",
     "finder.o0":"本周的两道题","finder.o1":"视频讲解",
-    "finder.o2":"讲义与板书","finder.o3":"题库","finder.o4":"学生的成果",
+    "finder.o2":"讲义与板书","finder.o4":"学生的成果",
     "finder.o5":"提问",
     "wb.tag":"本周 · {w}","wb.q1":"9709 · 三道积分，一个思路",
     "wb.q2":"BMO1 2026 · 那个差就是答案",
-    "stat.1":"节课已录像","stat.2":"份讲义",
-    "stat.3":"道题有答案","stat.4":"人次来听",
+    "stat.1":"份讲义","stat.2":"节课已录像",
+    "stat.3":"次播放",
     "qw.eb":"每周两题","qw.h":'每周两道，<span class="thin">一道最容易错。</span>',
     "qw.sub":"每周一放两道：一道大多数人都会丢分的真题，加一道 AMC、AIME、BMO 或 ARML 的竞赛题，先自己做，做完了再展开答案。",
     "tr.eb":"目录","tr.h":'四套考纲，<span class="thin">一个共同体</span>',
@@ -1044,9 +1015,6 @@ const I18N = {
     "vw.pdfblocked_s":"你现在看到的页面由一个预览服务转发，它只放行图片和网页，PDF 请求会被回成「not found」。同一个文件在正式网站上能正常打开。可以点下面的链接直接看这份 PDF。",
     "vw.pdfopen":"直接打开这份 PDF",
     "vw.pdfblocked_h":"<b>PDF</b><span>仅在这个预览里被拦</span><span>Esc 关闭</span>",
-    "pr.eb":"题库","pr.h":'每道题<span class="thin">都有编号</span>',
-    "pr.sub":"你问过的都在这儿，每条都链到讲解里解这道题的那一刻。",
-    "pr.c1":"编号","pr.c2":"题目","pr.c3":"来源","pr.c4":"难度","pr.c5":"分类","pr.watch":"看讲解 ↗",
     "im.eb":"成果","im.h":'真正<span class="thin">改变了什么</span>',
     "im.sub":"每学期更新一次，数字都是从课上记下来的，不是估的。",
     "im.c1":"学期","im.c2":"参与人数","im.c3":"作业提交率","im.c4":"前测","im.c5":"后测",
@@ -1054,7 +1022,7 @@ const I18N = {
     "me.eb":"方法","me.h":'为什么<span class="thin">这样教</span>',
     "me.title":"先让你做不出来，再给工具。",
     "me.body":'<p>教数学最常见的失败，是把方法当成知识来教：先讲一个漂亮的技巧，再配三道正好用得上它的题，学生当场全对，两周后遇到换个包装的同类题，还是做不出来。</p><p>因为那个技巧从来没被<strong>需要</strong>过，它只是被<strong>告知</strong>过。</p><div class="pull">所以这里的每一讲，都从一个你手上的工具解决不了的问题开始，先卡你五分钟，让缺口真实存在，再拿出能填上它的东西。</div><p>代价是进度慢，核心内容本可以用更少的讲数讲完，多出来的时间全花在「为什么这个工具非长成这样不可」上面。</p><p>我觉得这笔交换划算，工具会忘，缺口不会。</p>',
-    "ak.eb":"提问","ak.h":'在这里问，<span class="thin">会拿到编号</span>',
+    "ak.eb":"提问","ak.h":'在这里问，<span class="thin">会挂到板上</span>',
     "ak.sub":"如果一道题卡了你十分钟以上，它也会卡住别人。发过来，值得的会变成有编号的题，配一份写好的解答。",
     "ak.l1":"题目","ak.p1":"按你真正卡住的样子写，不用整理。",
     "ak.h1":"写得糙没关系，说清楚是哪一步卡住就行。",
@@ -1067,7 +1035,7 @@ const I18N = {
     "ak.err1":"再多写一点，至少一整句，不然看不出断在哪。",
     "ak.subj":"提问",
     "ak.m1":"题目：","ak.m2":"我试过：","ak.m3":"卷子：","ak.m4":"称呼：",
-    "ak.note":'<h3>流程</h3><ol><li>按你真正卡住的样子写，别整理。草稿的照片比誊清的版本有用。</li><li>它会带着考纲进我的邮箱。</li><li>如果值得，就会拿到编号进题库，先配解答，够格的再录一讲。</li></ol><p>除非你要求，否则不会署你的名字。</p>',
+    "ak.note":'<h3>流程</h3><ol><li>按你真正卡住的样子写，别整理。草稿的照片比誊清的版本有用。</li><li>它会带着考纲进我的邮箱。</li><li>如果值得，就会挂到板上，配一份写好的解答，卡住的人多就干脆录一讲。</li></ol><p>除非你要求，否则不会署你的名字。</p>',
     "fo.eb":"提问板",
     "fo.h":'在这里问，<span class="thin">卡住你的那一步，也卡住了别人</span>',
     "fo.sub":"问题在板上来回流动。点一条看整串回复，或者直接补一个答案。不填名字就是匿名。",
@@ -1119,43 +1087,29 @@ const IDX = [
 ];
 
 /* ------------------------------------------------------------------
-   视频数据。加封面只要一行 cover：
+   视频数据。加一讲就是加一行，封面和链接都写在这一条里：
 
-     {id:"9709-P1-03", track:"m9709", dur:"26:14",
+     {id:"9231-P1-04", track:"m9231", dur:"31:02",
       en:"...", zh:"...",
-      cover:"assets/covers/9709-P1-03.jpg"}
+      cover:"assets/covers/9231-P1-04.jpg",
+      url:"https://www.bilibili.com/video/BVxxxxxxxx/"}
 
-   封面尺寸用 16:9（1280×720 或 1200×675 都行），放 site/assets/covers/。
+   封面尺寸用 16:9（1280×720 或 1200×675 都行），放 assets/covers/。
    不写 cover 的话，卡片会退回深紫色底 + 编号的那种样式。
+   不写 url 的话，「在 B 站看」会退回你的个人主页。
 
    想用 B 站视频自己的封面：在 B 站播放页右键封面图 →「复制图片地址」，
    把那张图下载下来改名放进去就行，别直接链 B 站的地址，它会防盗链。
+   只有一条视频时，卡片会自动占满一整行（.vgrid.solo）。
 ------------------------------------------------------------------ */
 const VIDEOS = [
-  {id:"9709-P1-03", track:"m9709", dur:"26:14",
-   en:"Trigonometric identities: the three rearrangements that cover the paper",
-   zh:"三角恒等式：覆盖整张卷的三种变形", cover:"assets/covers/9709-P1-03.jpg"},
-  {id:"9709-P3-07", track:"m9709", dur:"31:02",
-   en:"Implicit and parametric differentiation, and where marks are lost",
-   zh:"隐函数与参数方程求导：分是在哪里丢的", cover:"assets/covers/9709-P3-07.jpg"},
-  {id:"9231-FP2-02", track:"m9231", dur:"34:40",
-   en:"Second-order linear differential equations, built from scratch",
-   zh:"二阶线性微分方程：从零搭起来", cover:"assets/covers/9231-FP2-02.jpg"},
-  {id:"9231-FM-05", track:"m9231", dur:"28:55",
-   en:"Rigid bodies in equilibrium: choosing the pivot",
-   zh:"刚体平衡：支点该怎么选", cover:"assets/covers/9231-FM-05.jpg"},
-  {id:"ADM-01", track:"adm", dur:"41:20",
-   en:"How to read an admissions question before you write anything",
-   zh:"动笔之前，怎么读一道入学考试题", cover:"assets/covers/ADM-01.jpg"},
-  {id:"COMP-A-03", track:"comp", dur:"24:18",
-   en:"Inequalities: one move that works from AMC to BMO",
-   zh:"不等式：从 AMC 到 BMO 的同一招", cover:"assets/covers/COMP-A-03.jpg"},
-  {id:"9709-P5-04", track:"m9709", dur:"22:36",
-   en:"Statistics: when the continuity correction actually applies",
-   zh:"统计：连续性修正到底什么时候才用", cover:"assets/covers/9709-P5-04.jpg"},
-  {id:"COMP-G-01", track:"comp", dur:"19:44",
-   en:"Invariants: what cannot change, and why that finishes it",
-   zh:"不变量：什么不会变，以及为什么这就够了", cover:"assets/covers/COMP-G-01.jpg"}
+  {id:"9231-P1-03", track:"m9231", dur:"27:45",
+   en:"Summations of series, and the tricks that make them easier",
+   zh:"级数求和及其技巧",
+   den:"Chapter 3 of the Further Maths textbook, worked from the page up: the standard results for Σr, Σr² and Σr³, then the method of differences — the part that looks like a trick and is really just telescoping.",
+   dzh:"进阶数学第三章，从书上那一页讲起：Σr、Σr²、Σr³ 的标准结果，然后是差分法——看起来像技巧，其实是相消。",
+   cover:"assets/covers/9231-P1-03.jpg",
+   url:"https://www.bilibili.com/video/BV1kVxg6eEKR/"}
 ];
 const FILTERS = [
   {k:"all", en:"All", zh:"全部"},
@@ -1314,14 +1268,6 @@ const QOTW = [
 
 ];
 
-const PROBLEMS = [
-  {id:"Q-0142", track:"comp", en:"Existence via divisibility and construction", zh:"关于整除与构造的存在性", src:"BMO1 2023 P2", lv:2},
-  {id:"Q-0138", track:"m9231", en:"A reduction formula that collapses", zh:"一个会自我塌缩的递推公式", src:"9231/02 2024 Q6", lv:2},
-  {id:"Q-0131", track:"adm", en:"Choosing which questions to attempt", zh:"怎么挑该做的那几题", src:"Admission paper 2023", lv:3},
-  {id:"Q-0127", track:"m9709", en:"Why the chain-rule answer is off by a factor", zh:"链式法则的答案为什么差一个系数", src:"9709/32 2024 Q5", lv:1},
-  {id:"Q-0119", track:"comp", en:"Quadratic residues and counting mod p", zh:"二次剩余与模 p 的计数", src:"AMC 12 2023 #21", lv:2}
-];
-
 const FAQ = [
   {q:{en:"Does it cost anything?", zh:"要钱吗？"},
    a:{en:"No. No account, no fee, no ads. The recordings sit on Bilibili and the rest of the site is one HTML file.",
@@ -1330,14 +1276,14 @@ const FAQ = [
    a:{en:"Because those pages only work while they are being talked through. A copy on your phone is a page of symbols with nothing attached to it. Come to a session and you get the paper itself.",
       zh:"因为那些纸是讲的时候才成立的，脱离现场就只剩一页记号。想要就来现场，纸会直接给你。"}},
   {q:{en:"I do not go to this school. Can I still use it?", zh:"我不是这个学校的，能看吗？"},
-   a:{en:"Yes. The recordings, the problem index and the two questions a week are open to anyone. Only the handouts are limited to the school, because they follow the class schedule.",
-      zh:"能。视频、题库、每周两题都对外开放，只有讲义限定校内，因为它跟着课程进度走。"}},
+   a:{en:"Yes. The recordings, the board and the two questions a week are open to anyone. Only the handouts are limited to the school, because they follow the class schedule.",
+      zh:"能。视频、提问板、每周两题都对外开放，只有讲义限定校内，因为它跟着课程进度走。"}},
   {q:{en:"How often is it updated?", zh:"多久更新一次？"},
    a:{en:"Two questions every Monday, without fail. Lectures follow the teaching, usually one or two a week during term. Numbers on the front page count the lists, so they move when the lists do.",
       zh:"每周一两道题，不跳票。视频跟着上课走，学期里一般一周一到两讲。首页的数字是从清单里数出来的，清单变了它就变。"}},
   {q:{en:"How long before a question I send gets answered?", zh:"我提的问题多久会回？"},
-   a:{en:"Within a week. If it is worth keeping it gets a number, and that number never changes — so you can quote it later.",
-      zh:"一周之内。值得留的会拿到编号，编号不会变，以后可以直接报这个号。"}}
+   a:{en:"Within a week, on the board. If it turns out to be a question other people are stuck on too, it becomes a lecture instead of a reply.",
+      zh:"一周之内，会回到提问板上。如果发现别人也卡在同一处，它就干脆变成一讲视频，而不只是一条回复。"}}
 ];
 
 const CASES = [
@@ -1386,15 +1332,15 @@ document.addEventListener('click', e => {
 
 /* ================= live numbers =================
    BASE = 站外已经发过、但没列进这个网站的条数。
-   页面上的数字 = BASE + 数组长度，所以你往下面 VIDEOS / HANDOUTS / PROBLEMS
+   页面上的数字 = BASE + 数组长度，所以你往下面 VIDEOS / HANDOUTS
    里加一条，首页的数字自己就变了，不用回来改。
+   sessions 是 B 站的总播放量，没有数组可数，只能手填，改了要自己回来更新。
    如果 BASE 写得比实际多，改掉——招生官会去 B 站点开核对。 */
-const BASE = { lectures: 0, handouts: 0, problems: 0, sessions: 0 };
+const BASE = { lectures: 0, handouts: 0, sessions: 30 };
 
 const STATS = {
-  lectures: () => BASE.lectures + VIDEOS.length,
   handouts: () => BASE.handouts + HANDOUTS.length,
-  problems: () => BASE.problems + PROBLEMS.length,
+  lectures: () => BASE.lectures + VIDEOS.length,
   sessions: () => BASE.sessions
 };
 function applyCounts(){
@@ -1421,7 +1367,7 @@ function setLang(l){
   $('#btn-zh').classList.toggle('on', l === 'zh');
   $('#brandSub').textContent = d['brandSub'];
   renderIdx(); renderFilters(); renderVideos(); renderHFilters(); renderHandouts();
-  renderQotw(); renderProblems(); renderCases(); renderFaq();
+  renderQotw(); renderCases(); renderFaq();
   foBanner(); foRenderStream();
   try { localStorage.setItem('cmc-lang', l); } catch(e){}
   try {
@@ -1444,14 +1390,18 @@ function renderIdx(){
 }
 
 function renderFilters(){
-  $('#filters').innerHTML = FILTERS.map(f =>
+  const box = $('#filters'); if (!box) return;
+  box.style.display = VIDEOS.length < 2 ? 'none' : '';
+  box.innerHTML = FILTERS.map(f =>
     `<button class="chip ${f.k===activeFilter?'on':''}" onclick="setFilter('${f.k}')">${pick(f)}</button>`
   ).join('');
 }
 function setFilter(k){ activeFilter = k; renderFilters(); renderVideos(); }
 
 function renderVideos(){
-  $('#vgrid').innerHTML = VIDEOS.map((v,i) => `
+  const grid = $('#vgrid');
+  grid.classList.toggle('solo', VIDEOS.length === 1);
+  grid.innerHTML = VIDEOS.map((v,i) => `
     <article class="vcard rv ${activeFilter==='all'||activeFilter===v.track?'':'hide'}" style="--d:${i*0.06}s">
       <div class="thumb">
         ${v.cover
@@ -1464,9 +1414,10 @@ function renderVideos(){
       <div class="vbody">
         <div class="vtag">${v.id} · ${pickShort(TRACKS[v.track])}</div>
         <h3 class="vtitle">${LANG==='zh'?v.zh:v.en}</h3>
+        ${v.den ? `<p class="vdesc">${LANG==='zh'?v.dzh:v.den}</p>` : ''}
         <div class="vmeta">
           <span>${LANG==='zh'?'完整讲解':'Full walkthrough'}</span>
-          <a href="https://space.bilibili.com/1240760316" target="_blank" rel="noopener">${LANG==='zh'?'在 B 站看 ↗':'Watch ↗'}</a>
+          <a href="${v.url || 'https://space.bilibili.com/1240760316'}" target="_blank" rel="noopener">${LANG==='zh'?'在 B 站看 ↗':'Watch ↗'}</a>
         </div>
       </div>
     </article>`).join('');
@@ -1547,18 +1498,6 @@ function renderQotw(){
         <div class="inner">${LANG==='zh'?q.aZh:q.aEn}</div>
       </details>
     </div>`).join('');
-}
-
-function renderProblems(){
-  $('#ptbody').innerHTML = PROBLEMS.map(p => `
-    <tr>
-      <td class="qid">${p.id}</td>
-      <td><a class="plink" href="https://space.bilibili.com/1240760316" target="_blank" rel="noopener">${LANG==='zh'?p.zh:p.en}</a></td>
-      <td class="src">${pickShort(TRACKS[p.track])}</td>
-      <td class="src hide-s">${p.src}</td>
-      <td class="diff">${'★'.repeat(p.lv)}${'☆'.repeat(3-p.lv)}</td>
-      <td><a class="watch" href="https://space.bilibili.com/1240760316" target="_blank" rel="noopener">${I18N[LANG]['pr.watch']}</a></td>
-    </tr>`).join('');
 }
 
 function renderCases(){
