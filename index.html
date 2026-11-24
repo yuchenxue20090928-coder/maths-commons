@@ -412,37 +412,54 @@ details.ans .inner b{color:var(--gold)}
   .vw-hint{font-size:9.5px;gap:10px}
 }
 
-/* ================= impact ================= */
+/* ================= log ================= */
 .impact{background:var(--royal);color:#fff}
 .impact .eyebrow{color:var(--gold)}
 .impact .eyebrow::before{background:var(--gold)}
 .impact .display{color:#fff}
 .impact .subline{color:rgba(255,255,255,.6)}
-.itable{width:100%;border-collapse:collapse;font-size:13.2px;font-variant-numeric:tabular-nums;margin-top:4px}
-.itable th{text-align:right;font-size:9.8px;letter-spacing:.15em;text-transform:uppercase;
-  color:rgba(255,238,176,.5);padding:9px 10px;border-bottom:1px solid rgba(255,238,176,.28)}
-.itable th:first-child,.itable td:first-child{text-align:left}
-.itable td{text-align:right;padding:17px 10px;border-bottom:1px solid rgba(255,238,176,.11)}
-.itable tbody tr{transition:background .35s var(--ease)}
-.itable tbody tr:hover td{background:rgba(255,238,176,.05)}
-.itable .up{color:var(--gold)}
-.cases{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:46px}
-@media(max-width:900px){.cases{grid-template-columns:1fr}}
-.case{border-top:1px solid rgba(255,238,176,.28);padding-top:16px;font-size:12.8px;line-height:1.85;
-  color:rgba(255,255,255,.68);transition:.45s var(--ease)}
-.case:hover{border-top-color:var(--gold);color:rgba(255,255,255,.88)}
-.case b{display:block;font-size:9.6px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;
-  margin-bottom:9px;font-weight:700}
+.log{margin-top:12px;border-top:1px solid rgba(255,238,176,.22)}
+.log-row{display:grid;grid-template-columns:158px 1fr;gap:30px;padding:23px 0;
+  border-bottom:1px solid rgba(255,238,176,.12);transition:border-color .45s var(--ease)}
+.log-row:hover{border-bottom-color:rgba(255,238,176,.42)}
+.log-row .dt{font-size:10.2px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);
+  font-variant-numeric:tabular-nums;padding-top:4px;white-space:nowrap}
+.log-row .tx{font-size:13.8px;line-height:1.8;color:rgba(255,255,255,.7)}
+.log-row:first-child .tx{color:rgba(255,255,255,.95)}
+.log-note{margin:26px 0 0;font-size:12.2px;line-height:1.8;color:rgba(255,255,255,.4)}
+@media(max-width:900px){
+  .log-row{grid-template-columns:1fr;gap:7px;padding:18px 0}
+  .log-row .dt{font-size:9.6px;letter-spacing:.18em;padding-top:0}
+  .log-row .tx{font-size:13.2px;line-height:1.78}
+  .log-note{font-size:11.8px;margin-top:20px}
+}
 
-/* ================= method ================= */
-.method-body{display:grid;grid-template-columns:1fr 1.5fr;gap:54px}
-@media(max-width:900px){.method-body{grid-template-columns:1fr;gap:22px}}
-.method-body h3{font-family:var(--serif);font-size:clamp(1.25rem,2.3vw,1.75rem);font-weight:500;
-  line-height:1.42;margin:0}
-.method-body .prose{font-size:14.6px;line-height:1.95;color:var(--text-2)}
-.method-body .prose p:first-child{margin-top:0}
-.pull{border-left:2px solid var(--gold-3);padding:4px 0 4px 20px;margin:22px 0;
-  font-family:var(--serif);font-size:15.5px;color:var(--text);line-height:1.7}
+/* ================= why ================= */
+.why-lead{font-family:var(--serif);font-size:clamp(1.04rem,1.5vw,1.3rem);line-height:1.82;
+  color:var(--text);max-width:43em;margin:28px 0 60px;letter-spacing:.002em}
+.why-body{display:grid;grid-template-columns:.72fr 1.55fr;gap:62px;align-items:start}
+.why-aside{position:sticky;top:104px}
+.why-k{font-size:9.6px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold-3);
+  margin-bottom:15px}
+.why-aside .pull{margin:0;border-left:2px solid var(--gold-3);padding:2px 0 2px 22px;
+  font-family:var(--serif);font-size:clamp(1.12rem,1.75vw,1.42rem);line-height:1.56;color:var(--text)}
+.why-main{max-width:38em}
+.why-main .prose{font-size:14.8px;line-height:1.98;color:var(--text-2)}
+.why-main .prose p{margin:0 0 20px}
+.why-main .prose p:first-child{margin-top:0}
+.why-main .prose p:last-child{margin-bottom:0}
+.why-main .prose strong{color:var(--text);font-weight:600}
+.why-close{margin:32px 0 0;padding-top:26px;border-top:1px solid var(--line);
+  font-size:13.4px;line-height:1.9;color:var(--muted)}
+@media(max-width:900px){
+  .why-lead{font-size:1rem;line-height:1.86;margin:20px 0 36px}
+  .why-body{grid-template-columns:1fr;gap:28px}
+  .why-aside{position:static}
+  .why-aside .pull{font-size:1rem;padding-left:18px}
+  .why-main{max-width:none}
+  .why-main .prose{font-size:14.2px;line-height:1.94}
+  .why-close{margin-top:26px;padding-top:20px;font-size:12.8px}
+}
 
 /* ================= footer ================= */
 footer{background:var(--royal);color:rgba(255,255,255,.6);padding:56px 0 38px;font-size:12.6px;
@@ -637,7 +654,7 @@ footer .fine{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,238,
     <a href="#handouts" data-i18n="nav.handouts">Handouts</a>
     <a href="#lectures" data-i18n="nav.lectures">Lectures</a>
     <a href="#ask" data-i18n="nav.ask">Board</a>
-    <a href="#impact" data-i18n="nav.impact">Impact</a>
+    <a href="#impact" data-i18n="nav.impact">Log</a>
   </nav>
 
   <div class="lang" role="group" aria-label="Language">
@@ -680,7 +697,7 @@ footer .fine{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,238,
         <option value="#handouts" data-i18n="finder.o2">Handouts &amp; notes</option>
         <option value="#lectures" data-i18n="finder.o1">Lecture recordings</option>
         <option value="#ask" data-i18n="finder.o5">Ask a question</option>
-        <option value="#impact" data-i18n="finder.o4">What students achieved</option>
+        <option value="#impact" data-i18n="finder.o4">What has gone in</option>
       </select>
       <span class="arrow">▾</span>
       <div class="quick">
@@ -730,6 +747,25 @@ footer .fine{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,238,
     <h2 class="display rv" data-i18n-html="tr.h">Four syllabuses, <span class="thin">one community</span></h2>
     <p class="subline rv" data-i18n="tr.sub">Everything is filed by what you are actually sitting this year — not by how hard it looks.</p>
     <div class="idx" id="idx"></div>
+  </div>
+</section>
+
+<!-- ================= WHY ================= -->
+<section id="method">
+  <div class="wrap">
+    <div class="eyebrow rv" data-i18n="wy.eb">The idea</div>
+    <h2 class="display rv" data-i18n-html="wy.h">Why <span class="thin">Maths Commons?</span></h2>
+    <p class="why-lead rv" data-i18n="wy.lead">Maths is more than a collection of formulas and techniques. It is about learning to think, asking the right questions, and finding your own way through a problem.</p>
+    <div class="why-body">
+      <aside class="why-aside rv">
+        <div class="why-k" data-i18n="wy.k">The premise</div>
+        <blockquote class="pull" data-i18n="wy.pull">Understanding should come before memorising.</blockquote>
+      </aside>
+      <div class="why-main">
+        <div class="prose rv" data-i18n-html="wy.body"></div>
+        <p class="why-close rv" data-i18n="wy.close">Maths Commons is a growing collection of ideas, resources and experiences. There is always more to explore.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -786,37 +822,14 @@ footer .fine{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,238,
   </div>
 </div>
 
-<!-- ================= IMPACT ================= -->
+<!-- ================= LOG ================= -->
 <section class="impact" id="impact">
   <div class="wrap">
-    <div class="eyebrow rv" data-i18n="im.eb">Impact</div>
-    <h2 class="display rv" data-i18n-html="im.h">What actually <span class="thin">changed</span></h2>
-    <p class="subline rv" data-i18n="im.sub">Updated once a term. Real numbers from the sessions, not estimates.</p>
-    <table class="itable rv">
-      <thead><tr>
-        <th data-i18n="im.c1">Term</th><th data-i18n="im.c2">Students</th><th data-i18n="im.c3">Homework rate</th>
-        <th data-i18n="im.c4">Pre-test</th><th data-i18n="im.c5">Post-test</th><th data-i18n="im.c6">Advanced</th>
-      </tr></thead>
-      <tbody>
-        <tr><td>2026 <span data-i18n="im.aut">Autumn</span></td><td>18</td><td>72%</td><td>31</td>
-          <td class="up">58</td><td class="up">2</td></tr>
-        <tr><td>2027 <span data-i18n="im.spr">Spring</span></td><td>26</td><td>81%</td><td>35</td>
-          <td class="up">67</td><td class="up">5</td></tr>
-      </tbody>
-    </table>
-    <div class="cases" id="cases"></div>
-  </div>
-</section>
-
-<!-- ================= METHOD ================= -->
-<section id="method">
-  <div class="wrap">
-    <div class="eyebrow rv" data-i18n="me.eb">Method</div>
-    <h2 class="display rv" data-i18n-html="me.h">Why it is taught <span class="thin">this way</span></h2>
-    <div class="method-body">
-      <h3 class="rv" data-i18n="me.title">Let you fail first. Then hand over the tool.</h3>
-      <div class="prose rv" data-i18n-html="me.body"></div>
-    </div>
+    <div class="eyebrow rv" data-i18n="lg.eb">Log</div>
+    <h2 class="display rv" data-i18n-html="lg.h">What has gone in, <span class="thin">and when</span></h2>
+    <p class="subline rv" data-i18n="lg.sub">Nothing here is estimated or projected. Every line below opens on this site right now.</p>
+    <div class="log rv" id="log"></div>
+    <p class="log-note rv" data-i18n="lg.note">There is no schedule. The list gets longer when something is finished.</p>
   </div>
 </section>
 
@@ -898,15 +911,15 @@ footer .fine{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,238,
 const I18N = {
   en: {
     "nav.weekly":"Weekly","nav.lectures":"Lectures","nav.handouts":"Handouts",
-    "nav.ask":"Board","nav.impact":"Impact",
+    "nav.ask":"Board","nav.impact":"Log",
     "brandSub":"Cambridge A-Level Centre · est. 2026",
     "hero.kicker":"9709 · 9231 · Admission tests · Competitions &amp; olympiads",
     "hero.title":'Mathematics,<br>in <mark>one place</mark>,<br>for all three years',
     "hero.lede":'A student-run mathematics community at Cambridge A-Level Centre. Lectures, handouts and an open board for questions — covering <em>9709, 9231, admission tests and olympiad</em>. No login, no charge.',
-    "hero.founder":"Founded and run by one student in 2026, alongside the school maths club — not under it. Open to Grades 10, 11 and 12.",
+    "hero.founder":"Founded and run by one student in 2026, alongside the HFLS CAL centre maths club. Open to Grades 10, 11 and 12.",
     "finder.lab":"I am looking for","finder.ph":"Choose a section",
     "finder.o0":"This week's two questions","finder.o1":"Lecture recordings",
-    "finder.o2":"Handouts &amp; notes","finder.o4":"What students achieved",
+    "finder.o2":"Handouts &amp; notes","finder.o4":"What has gone in",
     "finder.o5":"Ask a question",
     "wb.tag":"This week · {w}","wb.q1":"9709 · three integrals, one idea",
     "wb.q2":"BMO1 2026 · the gap that is the answer",
@@ -934,13 +947,14 @@ const I18N = {
     "vw.pdfblocked_s":"The page you are looking at is served by a preview that only passes through images and HTML, so the PDF request comes back as “not found”. On the published site the same file opens normally. Use the link below to open the PDF directly.",
     "vw.pdfopen":"Open the PDF directly",
     "vw.pdfblocked_h":"<b>PDF</b><span>Blocked in this preview only</span><span>Esc closes</span>",
-    "im.eb":"Impact","im.h":'What actually <span class="thin">changed</span>',
-    "im.sub":"Updated once a term. Real numbers from the sessions, not estimates.",
-    "im.c1":"Term","im.c2":"Students","im.c3":"Homework rate","im.c4":"Pre-test","im.c5":"Post-test",
-    "im.c6":"Advanced","im.aut":"Autumn","im.spr":"Spring",
-    "me.eb":"Method","me.h":'Why it is taught <span class="thin">this way</span>',
-    "me.title":"Let you fail first. Then hand over the tool.",
-    "me.body":'<p>The most common failure in teaching mathematics is treating a method as content: show a neat trick, then set three problems that happen to use it. Everyone gets full marks on the day; two weeks later, the same idea in a different dress defeats them.</p><p>Because the trick was never <strong>needed</strong>. It was only <strong>announced</strong>.</p><div class="pull">So every lecture here opens with a problem your current tools cannot solve. You sit with it for five minutes, the gap becomes real, and only then does the instrument arrive.</div><p>The cost is pace. The core material could be covered in fewer sessions; the extra ones are spent entirely on why each tool has to be shaped the way it is.</p><p>I think the trade is worth it. Tools get forgotten. Gaps do not.</p>',
+    "lg.eb":"Log","lg.h":'What has gone in, <span class="thin">and when</span>',
+    "lg.sub":"Nothing here is estimated or projected. Every line below opens on this site right now.",
+    "lg.note":"There is no schedule. The list gets longer when something is finished.",
+    "wy.eb":"The idea","wy.h":'Why <span class="thin">Maths Commons?</span>',
+    "wy.lead":"Maths is more than a collection of formulas and techniques. It is about learning to think, asking the right questions, and finding your own way through a problem.",
+    "wy.k":"The premise","wy.pull":"Understanding should come before memorising.",
+    "wy.body":'<p>Maths Commons was created to make that process a little more accessible: a place to share mathematical ideas, explore interesting problems, and make learning resources available to anyone who wants to go a little further.</p><p>Here you will find lecture videos, handouts and discussions across different areas of mathematics, particularly Cambridge A-Level Mathematics and Further Mathematics.</p><p>But there is a thought behind how things are taught here. Rather than introducing a technique and immediately showing where it can be used, we prefer to start with a problem. Give it some thought. Try a few approaches. See where your current understanding takes you. Then, when the need for a new idea becomes clear, we introduce it.</p><p>The aim is not simply to help you get through the next question. It is to help you recognise familiar ideas in unfamiliar problems, develop your own mathematical intuition, and become a more independent thinker.</p>',
+    "wy.close":"Maths Commons is a growing collection of ideas, resources and experiences. There is always more to explore.",
     "ak.eb":"Ask a question","ak.h":'Ask it here. <span class="thin">It goes on the board.</span>',
     "ak.sub":"If a question stopped you for more than ten minutes, it will stop somebody else too. Send it in; the good ones become numbered problems with a written solution.",
     "ak.l1":"The question","ak.p1":"Type it the way it actually confused you — no need to tidy it up.",
@@ -989,35 +1003,35 @@ const I18N = {
   },
   zh: {
     "nav.weekly":"每周两题","nav.lectures":"视频","nav.handouts":"讲义",
-    "nav.ask":"提问板","nav.impact":"成果",
+    "nav.ask":"提问板","nav.impact":"记录",
     "brandSub":"剑桥国际高中 · 始于 2026",
     "hero.kicker":"9709 · 9231 · 入学考试 · 竞赛与奥赛",
     "hero.title":'数学，<br>十年级到十二年级，<br>都在<mark>一个地方</mark>',
-    "hero.lede":'剑桥国际高中数学共同体是学生自办的：讲过的课都录下来，写过的板书都存下来，有问题就丢到提问板上，从 9709、9231 到入学考试和竞赛都在里面，不用登录，也不收费。',
-    "hero.founder":"2026 年由一名学生独立创办、独立运营，和学校数学社是并行的两件事，不从属于它，面向 10、11、12 年级。",
+    "hero.lede":'剑桥国际高中数学共同体是学生自办并运营的：包含所有讲过的课程与写过的讲义，从 9709、9231 到入学考试和竞赛都在里面，如果有问题可以丢到提问板上，会由我或者热心的同学及时回复～',
+    "hero.founder":"2026 年由一名学生独立创办、独立运营，和学校数学社并行，面向 10、11、12 年级全体对数学感兴趣或者需要准备考试的学生。",
     "finder.lab":"我想找","finder.ph":"选择板块",
     "finder.o0":"本周的两道题","finder.o1":"视频讲解",
-    "finder.o2":"讲义与板书","finder.o4":"学生的成果",
+    "finder.o2":"讲义与板书","finder.o4":"最近加进去的",
     "finder.o5":"提问",
     "wb.tag":"本周 · {w}","wb.q1":"9709 · 三道积分，一个思路",
     "wb.q2":"BMO1 2026 · 那个差就是答案",
     "stat.1":"份讲义","stat.2":"节课已录像",
     "stat.3":"总播放量",
-    "qw.eb":"每周两题","qw.h":'每周两道，<span class="thin">一道最容易错。</span>',
+    "qw.eb":"每周两题","qw.h":'每周两道，<span class="thin">分别来自于校内A-Level课程和校外出名数学竞赛</span>',
     "qw.sub":"每周一放两道：一道大多数人都会丢分的真题，加一道 AMC、AIME、BMO 或 ARML 的竞赛题，先自己做，做完了再展开答案。",
     "tr.eb":"目录","tr.h":'四套考纲，<span class="thin">一个共同体</span>',
-    "tr.sub":"所有内容都按你今年真正要考的卷子归档，不看它看起来有多难。",
+    "tr.sub":"所有内容都按你今年真正要考的卷子归档，而不是按看起来有多难来分。",
     "track.adm":"入学考试","track.comp":"竞赛与奥赛",
     "idx.1t":"9709 · 普通数学","idx.1s":"纯数 1 · 纯数 3 · 力学 · 概率统计",
     "idx.1d":"真题一道道拆开讲，顺带说清考官每年都在哪里埋坑。",
     "idx.2t":"9231 · 进阶数学","idx.2s":"进阶纯数 2 · 进阶力学 · 进阶概率",
-    "idx.2d":"决定第四门能不能拿 A* 的那几张卷子。",
+    "idx.2d":"帮助同学们锦上添花拿第四门 A* 的那几张卷子。",
     "idx.3t":"入学考试","idx.3s":"数学专业的入学笔试",
-    "idx.3d":"按考官阅卷的路子写解答，还有十二道题里怎么挑出该做的那六道。",
+    "idx.3d":"按考官阅卷的路子写解答，为今后大学申请与学习做准备",
     "idx.4t":"竞赛与奥赛","idx.4s":"AMC · AIME · BMO",
-    "idx.4d":"不变量、极端原理、构造，都从你还做不出来的那道题讲起。",
+    "idx.4d":"各种竞赛常见思路与构造讲解，包含了许多过往有名竞赛真题。",
     "lec.eb":"视频讲解","lec.h":'每一讲，<span class="thin">按编号归档</span>',
-    "lec.sub":"按编号，不按日期，一讲的编号永远不变，九月发给你的东西，六月翻出来还对得上，每讲 B 站和 YouTube 都有一份，哪边能打开就从哪边看。",
+    "lec.sub":"按编号，不按日期，一讲的编号永远不变，一一对应 一直可以找到，每讲 B 站和 YouTube 都有一份，哪边能打开就从哪边看。",
     "ho.eb":"讲义与板书","ho.h":'就在这里读，<span class="thin">条件只有这一个。</span>',
     "ho.sub":"这些是我讲课时写在纸上的东西，所以不能下载也不能打印哦，如果想要一份可以来联系我哦～",
     "ho.note":"ⓘ 仅限在线查看。本页已禁用右键、拖拽与打印。",
@@ -1025,13 +1039,14 @@ const I18N = {
     "vw.pdfblocked_s":"你现在看到的页面由一个预览服务转发，它只放行图片和网页，PDF 请求会被回成「not found」。同一个文件在正式网站上能正常打开。可以点下面的链接直接看这份 PDF。",
     "vw.pdfopen":"直接打开这份 PDF",
     "vw.pdfblocked_h":"<b>PDF</b><span>仅在这个预览里被拦</span><span>Esc 关闭</span>",
-    "im.eb":"成果","im.h":'真正<span class="thin">改变了什么</span>',
-    "im.sub":"每学期更新一次，数字都是从课上记下来的，不是估的。",
-    "im.c1":"学期","im.c2":"参与人数","im.c3":"作业提交率","im.c4":"前测","im.c5":"后测",
-    "im.c6":"竞赛晋级","im.aut":"秋","im.spr":"春",
-    "me.eb":"方法","me.h":'为什么<span class="thin">这样教</span>',
-    "me.title":"先让你做不出来，再给工具。",
-    "me.body":'<p>教数学最常见的失败，是把方法当成知识来教：先讲一个漂亮的技巧，再配三道正好用得上它的题，学生当场全对，两周后遇到换个包装的同类题，还是做不出来。</p><p>因为那个技巧从来没被<strong>需要</strong>过，它只是被<strong>告知</strong>过。</p><div class="pull">所以这里的每一讲，都从一个你手上的工具解决不了的问题开始，先卡你五分钟，让缺口真实存在，再拿出能填上它的东西。</div><p>代价是进度慢，核心内容本可以用更少的讲数讲完，多出来的时间全花在「为什么这个工具非长成这样不可」上面。</p><p>我觉得这笔交换划算，工具会忘，缺口不会。</p>',
+    "lg.eb":"记录","lg.h":'加进去了什么，<span class="thin">什么时候</span>',
+    "lg.sub":"本日志实时记录所有剑桥数学共同体网站上的更新，而下面每一行，都是你现在就能在这个站里打开的东西。",
+    "lg.note":"记录了网站更新情况，做完一样就多一行。",
+    "wy.eb":"初衷","wy.h":'为什么<span class="thin">创办 Maths Commons？</span>',
+    "wy.lead":"数学不只是公式和解题技巧的集合，它更关乎思考、提问，以及在面对一道陌生问题时找到属于自己的思路。",
+    "wy.k":"前提","wy.pull":"理解，应该先于记忆。",
+    "wy.body":'<p>Maths Commons 的创立，就是希望让这个过程更容易被接触和分享：整理数学的想法，讨论有意思的问题，把学习资源开放给每一个想再往前走一点的人。</p><p>这里目前主要围绕 Cambridge A-Level 的 Mathematics 和 Further Mathematics，有课程视频、讲义，也有不同方向的讨论。</p><p>不过比起讲什么，我们同样在意怎么讲。与其先给一个方法、再演示它用在哪，不如从一道题开始。先想，先试几种走法，看看现有的理解能带你走多远。等到确实需要一件新工具的时候，再把它拿出来。</p><p>我们想带来的不只是下一道题的解法，而是面对陌生问题时认出熟悉想法的能力，一点点长出来的数学直觉，和一个更独立的思考者。</p>',
+    "wy.close":"Maths Commons 还在不断扩大，新的课程、新的想法、新的资源会一直往里加，也希望能陪更多人发现数学里值得走进去的地方。",
     "ak.eb":"提问","ak.h":'在这里问，<span class="thin">会挂到板上</span>',
     "ak.sub":"如果一道题卡了你十分钟以上，它也会卡住别人。发过来，值得的会变成有编号的题，配一份写好的解答。",
     "ak.l1":"题目","ak.p1":"按你真正卡住的样子写，不用整理。",
@@ -1261,7 +1276,7 @@ const HANDOUTS = [
 const QOTW = [
   {tag:{en:"9709 · Paper 3 · integration", zh:"9709 · Paper 3 · 积分"},
    en:"Three integrals that are all the same integral",
-   zh:"三道积分，其实是同一道",
+   zh:"来源于同一知识点的三道常考积分",
    bEn:"(a) ∫ 1/x dx &nbsp; (b) ∫₁<sup>e</sup> 1/x dx &nbsp; (c) ∫ x/(x²+1) dx<br>Nothing here needs a trick. The third one is the first one wearing a hat.",
    bZh:"(a) ∫ 1/x dx　(b) ∫₁<sup>e</sup> 1/x dx　(c) ∫ x/(x²+1) dx<br>三道都不需要技巧。第三道就是第一道戴了个帽子。",
    mEn:"9709/33 style · three parts · 9 marks total",
@@ -1284,31 +1299,46 @@ const QOTW = [
 const FAQ = [
   {q:{en:"Does it cost anything?", zh:"要钱吗？"},
    a:{en:"No. No account, no fee, no ads. The recordings sit on Bilibili and on YouTube; the rest of the site is one HTML file.",
-      zh:"不要。不用注册，不收费，也没有广告。视频 B 站和 YouTube 都有，网站本身就是一个 HTML 文件。"}},
+      zh:"不用注册，不收费，也没有广告。视频 B 站和 YouTube 都有，讲义的纸质版内容也可以来找我要或者来提问～"}},
   {q:{en:"Why can I not download the handouts?", zh:"讲义为什么不能下载？"},
    a:{en:"Because those pages only work while they are being talked through. A copy on your phone is a page of symbols with nothing attached to it. Come to a session and you get the paper itself.",
-      zh:"因为那些纸是讲的时候才成立的，脱离现场就只剩一页记号。想要就来现场，纸会直接给你。"}},
+      zh:"纸质资料为版权所有，而且如果对某处有疑虑欢迎随时来找我提问～"}},
   {q:{en:"I do not go to this school. Can I still use it?", zh:"我不是这个学校的，能看吗？"},
    a:{en:"Yes. The recordings, the board and the two questions a week are open to anyone. Only the handouts are limited to the school, because they follow the class schedule.",
       zh:"能。视频、提问板、每周两题都对外开放，只有讲义限定校内，因为它跟着课程进度走。"}},
   {q:{en:"How often is it updated?", zh:"多久更新一次？"},
    a:{en:"Two questions every Monday, without fail. Lectures follow the teaching, usually one or two a week during term. Numbers on the front page count the lists, so they move when the lists do.",
-      zh:"每周一两道题，不跳票。视频跟着上课走，学期里一般一周一到两讲。首页的数字是从清单里数出来的，清单变了它就变。"}},
+      zh:"每周一两道题，都会更新，视频跟着上课走，学期里一般一周一到两讲。首页的数字是从清单里数出来的，清单变了它就变。"}},
   {q:{en:"How long before a question I send gets answered?", zh:"我提的问题多久会回？"},
    a:{en:"Within a week, on the board. If it turns out to be a question other people are stuck on too, it becomes a lecture instead of a reply.",
       zh:"一周之内，会回到提问板上。如果发现别人也卡在同一处，它就干脆变成一讲视频，而不只是一条回复。"}}
 ];
 
-const CASES = [
-  {k:"01",
-   en:"Grade 10. Scored 6 correct on the AMC10 diagnostic, stuck almost entirely on counting. Completed the combinatorics strand and 42 set problems. Four months later: 14 correct, top 5% on the AMC10.",
-   zh:"G10，入学时 AMC10 模考正确 6 题，主要卡在组合计数。跟完组合线，做完 42 道课后题。四个月后模考正确 14 题，AMC10 进入前 5%。"},
-  {k:"02",
-   en:"Grade 11, sitting 9709 that summer. Came in at a C on Paper 3. Six weeks of P3 walkthroughs and timed past papers. Finished with an A.",
-   zh:"G11，当年夏天考 9709。P3 进来时是 C。六周的 P3 精讲加真题限时训练，最后拿到 A。"},
-  {k:"03",
-   en:"Grade 9. Essentially no geometry. Started at the first geometry lecture, one lecture and five problems a week. By the end of term, solving BMO1 geometry Q2 unaided.",
-   zh:"G9，几何基础几乎为零。从第一讲几何开始，每周一讲加五道题。期末能独立完成 BMO1 的几何第二题。"}
+/* ------------------------------------------------------------------
+   记录。只写做完的东西，按时间倒序，最新的一条在最上面。
+   加一条就复制一段 {d:"2026 · 12", en:"...", zh:"..."}，日期用「年 · 月」。
+   不要写计划、不要写估计、不要写「帮助了多少人」——这一栏的作用是
+   让人相信上面那些数字，写一句不实的话就全废了。
+------------------------------------------------------------------ */
+const LOG = [
+  {d:"2026 · 11",
+   en:"All six BMO Round 1 papers, 2021–22 to 2026–27, with full written solutions for two of them.",
+   zh:"BMO 第一轮 21/22 到 26/27 六套卷全部上线，其中两套（25/26，21/22）配了完整的手写解答。"},
+  {d:"2026 · 11",
+   en:"Seven chapters of 9231 as handouts — written back in May, from roots of polynomials through to proof by induction.",
+   zh:"9231 的七章讲义上线，内容是五月写好的，从多项式的根一直做到数学归纳法。"},
+  {d:"2026 · 11",
+   en:"First lecture recorded: 9231, summation of series. Twenty-seven minutes, on Bilibili and on YouTube.",
+   zh:"第一讲录完：9231 级数求和，27 分钟，B 站和 YouTube 都有"},
+  {d:"2026 · 11",
+   en:"The question board opened. No account, no email address, nothing recorded about who asked.",
+   zh:"提问板论坛开放，可接受匿名提问，会在每周查看并回复"},
+  {d:"2026 · 10",
+   en:"The site itself: one HTML file, English and Chinese, no accounts and no analytics.",
+   zh:"网站建成，中英双语便于同学们双语的学习需求，无需账号登录便于知识的传播与普及"},
+  {d:"2026 · 09",
+   en:"Maths Commons starts — alongside the school maths club, not inside it.",
+   zh:"Maths Commons 开始，和杭州外国语学校剑桥高中数学社并行教授，传播数学知识，初衷是帮助同学们加深对数学的热爱并获取更好的成绩反馈"}
 ];
 
 /* ================= state ================= */
@@ -1386,7 +1416,7 @@ function setLang(l){
   $('#btn-zh').classList.toggle('on', l === 'zh');
   $('#brandSub').textContent = d['brandSub'];
   renderIdx(); renderFilters(); renderVideos(); renderHFilters(); renderHandouts();
-  renderQotw(); renderCases(); renderFaq();
+  renderQotw(); renderLog(); renderFaq();
   foBanner(); foRenderStream();
   try { localStorage.setItem('cmc-lang', l); } catch(e){}
   try {
@@ -1522,9 +1552,10 @@ function renderQotw(){
     </div>`).join('');
 }
 
-function renderCases(){
-  $('#cases').innerHTML = CASES.map(c =>
-    `<div class="case"><b>Case ${c.k}</b>${LANG==='zh'?c.zh:c.en}</div>`).join('');
+function renderLog(){
+  const box = $('#log'); if (!box) return;
+  box.innerHTML = LOG.map(r =>
+    `<div class="log-row"><div class="dt">${r.d}</div><div class="tx">${LANG==='zh'?r.zh:r.en}</div></div>`).join('');
 }
 
 /* ================= observers ================= */
