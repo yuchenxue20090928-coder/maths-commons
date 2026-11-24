@@ -169,10 +169,17 @@ h1.hero-title mark::after{content:"";position:absolute;left:-2px;right:-2px;bott
   transition:transform 1s var(--ease) .14s,opacity .85s var(--ease) .14s}
 .stat:nth-child(even) .k{transform:translateX(34px)}
 .stat.in .k{transform:none;opacity:1}
+.stat .ksplit{font-size:10px;letter-spacing:.05em;color:rgba(255,255,255,.4);
+  margin-top:8px;font-variant-numeric:tabular-nums;white-space:nowrap;
+  transform:translateX(-34px);opacity:0;
+  transition:transform 1s var(--ease) .22s,opacity .85s var(--ease) .22s}
+.stat:nth-child(even) .ksplit{transform:translateX(34px)}
+.stat.in .ksplit{transform:none;opacity:1}
 @media(max-width:900px){.stats .wrap{grid-template-columns:repeat(3,1fr)}
   .stat{padding:28px 12px}
   .stat .v{font-size:clamp(1.7rem,7vw,2.4rem)}
-  .stat .k{font-size:8.6px;letter-spacing:.1em;margin-top:10px}}
+  .stat .k{font-size:8.6px;letter-spacing:.1em;margin-top:10px}
+  .stat .ksplit{font-size:8px;letter-spacing:0;margin-top:5px;white-space:normal}}
 
 /* ================= sections ================= */
 section{padding:98px 0;scroll-margin-top:68px;position:relative}
@@ -700,8 +707,9 @@ footer .fine{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,238,
       <div class="k" data-i18n="stat.1">handouts written</div></div>
     <div class="stat"><div class="v"><span class="cnt" data-to="1" data-key="lectures">0</span></div>
       <div class="k" data-i18n="stat.2">lectures recorded</div></div>
-    <div class="stat"><div class="v"><span class="cnt" data-to="30" data-key="sessions">0</span><small>+</small></div>
-      <div class="k" data-i18n="stat.3">views on Bilibili &amp; YouTube</div></div>
+    <div class="stat"><div class="v"><span class="cnt" data-to="65" data-key="sessions">0</span><small>+</small></div>
+      <div class="k" data-i18n="stat.3">views on Bilibili &amp; YouTube</div>
+      <div class="ksplit" id="statSplit"></div></div>
   </div>
 </section>
 
@@ -1011,7 +1019,7 @@ const I18N = {
     "lec.eb":"视频讲解","lec.h":'每一讲，<span class="thin">按编号归档</span>',
     "lec.sub":"按编号，不按日期，一讲的编号永远不变，九月发给你的东西，六月翻出来还对得上，每讲 B 站和 YouTube 都有一份，哪边能打开就从哪边看。",
     "ho.eb":"讲义与板书","ho.h":'就在这里读，<span class="thin">条件只有这一个。</span>',
-    "ho.sub":"这些是我讲课时写在纸上的东西，故意做成只能看，不能下载也不能打印，想要一份就来现场，那些东西在现场才讲得通。",
+    "ho.sub":"这些是我讲课时写在纸上的东西，所以不能下载也不能打印哦，如果想要一份可以来联系我哦～",
     "ho.note":"ⓘ 仅限在线查看。本页已禁用右键、拖拽与打印。",
     "vw.pdfblocked_t":"这个预览环境打不开 PDF",
     "vw.pdfblocked_s":"你现在看到的页面由一个预览服务转发，它只放行图片和网页，PDF 请求会被回成「not found」。同一个文件在正式网站上能正常打开。可以点下面的链接直接看这份 PDF。",
@@ -1339,21 +1347,26 @@ document.addEventListener('click', e => {
    BASE = 站外已经发过、但没列进这个网站的条数。
    页面上的数字 = BASE + 数组长度，所以你往下面 VIDEOS / HANDOUTS
    里加一条，首页的数字自己就变了，不用回来改。
-   sessions 是 B 站 + YouTube 两个平台加起来的播放量，没有数组可数，只能手填，
-   涨了就回来改这一个数字（两边播放量相加）。
-   如果 BASE 写得比实际多，改掉——招生官会去 B 站点开核对。 */
-const BASE = { lectures: 0, handouts: 0, sessions: 30 };
+
+   VIEWS = 两个平台的播放量快照，手动填，涨了就回来改这两个数字。
+   首页那个「总播放量」= bilibili + youtube，不用自己算。
+   查的地方：B 站创作中心 / 视频页；YouTube Studio / 视频页。
+   如果填得比实际多，改掉——招生官会点开两边核对。 */
+const BASE = { lectures: 0, handouts: 0 };
+const VIEWS = { bilibili: 35, youtube: 30 };
 
 const STATS = {
   handouts: () => BASE.handouts + HANDOUTS.length,
   lectures: () => BASE.lectures + VIDEOS.length,
-  sessions: () => BASE.sessions
+  sessions: () => VIEWS.bilibili + VIEWS.youtube
 };
 function applyCounts(){
   $$('.cnt').forEach(el => {
     const k = el.dataset.key;
     if (k && STATS[k]) el.dataset.to = STATS[k]();
   });
+  const sp = $('#statSplit');
+  if (sp) sp.textContent = 'Bilibili ' + VIEWS.bilibili + ' · YouTube ' + VIEWS.youtube;
 }
 const TERM_START = new Date(2026, 8, 7);           // 2026-09-07，学期第一周的周一
 const WEEK = Math.max(1, Math.floor((Date.now() - TERM_START) / 6048e5) + 1);
