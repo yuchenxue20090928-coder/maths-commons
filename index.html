@@ -720,7 +720,7 @@ footer .fine{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,238,
 <!-- ================= STATS ================= -->
 <section class="stats" id="stats" style="padding:0">
   <div class="wrap">
-    <div class="stat"><div class="v"><span class="cnt" data-to="23" data-key="handouts">0</span></div>
+    <div class="stat"><div class="v"><span class="cnt" data-to="24" data-key="handouts">0</span></div>
       <div class="k" data-i18n="stat.1">handouts written</div></div>
     <div class="stat"><div class="v"><span class="cnt" data-to="1" data-key="lectures">0</span></div>
       <div class="k" data-i18n="stat.2">lectures recorded</div></div>
@@ -1205,9 +1205,21 @@ const HANDOUTS = [
             "assets/handouts/9231-FP1-07/p7.png",
             "assets/handouts/9231-FP1-07/p8.png",
             "assets/handouts/9231-FP1-07/p9.png"]},
+  {id:"9231-C19", track:"m9231", en:"Chapter 19 · Hyperbolic functions", zh:"第 19 章 · 双曲函数", pg:"2 pp",
+   thumb:"assets/covers/t-9231-C19.jpg",
+   pages:["assets/handouts/9231-C19/p1.jpg",
+            "assets/handouts/9231-C19/p2.jpg"]},
   {id:"9709-P1-REV", track:"m9709", en:"Paper 1 · revision, in syllabus order", zh:"Paper 1 · 总复习，按考纲顺序", pg:"1 p",
    thumb:"assets/covers/t-9709-P1-REV.jpg",
    pages:["assets/handouts/9709-P1-REV/p1.jpg"]},
+  {id:"9709-M1-REV", track:"m9709", en:"Paper 4 · revision, with a checklist at the end", zh:"Paper 4 · 总复习，末尾附一张自查清单", pg:"6 pp",
+   thumb:"assets/covers/t-9709-M1-REV.jpg",
+   pages:["assets/handouts/9709-M1-REV/p1.jpg",
+            "assets/handouts/9709-M1-REV/p2.jpg",
+            "assets/handouts/9709-M1-REV/p3.jpg",
+            "assets/handouts/9709-M1-REV/p4.jpg",
+            "assets/handouts/9709-M1-REV/p5.jpg",
+            "assets/handouts/9709-M1-REV/p6.jpg"]},
   {id:"BMO-R1-26-27", track:"comp", en:"British Mathematical Olympiad · 2026–27", zh:"英国数学奥林匹克 · 2026–27", pg:"3 pp",
    thumb:"assets/covers/t-BMO-R1-26-27.jpg",
    pages:["assets/handouts/BMO-R1-26-27/p1.png",
@@ -1321,6 +1333,12 @@ const FAQ = [
    让人相信上面那些数字，写一句不实的话就全废了。
 ------------------------------------------------------------------ */
 const LOG = [
+  {d:"2026 · 11",
+   en:"9231 chapter 19, hyperbolic functions — the exponential forms, the identities, and the inverses, on two pages.",
+   zh:"9231 第 19 章双曲函数上线，指数形式、恒等式、反函数，一共两页"},
+  {d:"2026 · 11",
+   en:"Paper 4 revision notes — six pages of Mechanics 1, ending with the questions to ask yourself before you hand the paper in.",
+   zh:"9709 Paper 4 总复习上线，力学 1 一共六页，最后一页是交卷前该问自己的那几个问题"},
   {d:"2026 · 11",
    en:"All six BMO Round 1 papers, 2021–22 to 2026–27, with full written solutions for two of them.",
    zh:"BMO 第一轮 21/22 到 26/27 六套卷全部上线，其中两套（25/26，21/22）配了完整的手写解答。"},
